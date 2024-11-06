@@ -1,0 +1,15 @@
+C:\Users\jojod\RiderProjects\Boogle\Boogle\bin\Debug\net8.0-windows\Boogle.exe
+C:\Users\jojod\RiderProjects\Boogle\Boogle\bin\Debug\net8.0-windows\Boogle.deps.json
+C:\Users\jojod\RiderProjects\Boogle\Boogle\bin\Debug\net8.0-windows\Boogle.runtimeconfig.json
+C:\Users\jojod\RiderProjects\Boogle\Boogle\bin\Debug\net8.0-windows\Boogle.dll
+C:\Users\jojod\RiderProjects\Boogle\Boogle\bin\Debug\net8.0-windows\Boogle.pdb
+C:\Users\jojod\RiderProjects\Boogle\Boogle\obj\Debug\net8.0-windows\Boogle.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jojod\RiderProjects\Boogle\Boogle\obj\Debug\net8.0-windows\Boogle.AssemblyInfoInputs.cache
+C:\Users\jojod\RiderProjects\Boogle\Boogle\obj\Debug\net8.0-windows\Boogle.AssemblyInfo.cs
+C:\Users\jojod\RiderProjects\Boogle\Boogle\obj\Debug\net8.0-windows\Boogle.csproj.CoreCompileInputs.cache
+C:\Users\jojod\RiderProjects\Boogle\Boogle\obj\Debug\net8.0-windows\Boogle.sourcelink.json
+C:\Users\jojod\RiderProjects\Boogle\Boogle\obj\Debug\net8.0-windows\Boogle.dll
+C:\Users\jojod\RiderProjects\Boogle\Boogle\obj\Debug\net8.0-windows\refint\Boogle.dll
+C:\Users\jojod\RiderProjects\Boogle\Boogle\obj\Debug\net8.0-windows\Boogle.pdb
+C:\Users\jojod\RiderProjects\Boogle\Boogle\obj\Debug\net8.0-windows\Boogle.genruntimeconfig.cache
+C:\Users\jojod\RiderProjects\Boogle\Boogle\obj\Debug\net8.0-windows\ref\Boogle.dll

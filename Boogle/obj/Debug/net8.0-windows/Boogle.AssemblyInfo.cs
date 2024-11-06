@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Boogle")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4e2fb4d2142fab80ada467312dfe76f201f625b4")]
 [assembly: System.Reflection.AssemblyProductAttribute("Boogle")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Boogle")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
