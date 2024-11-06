@@ -25,7 +25,7 @@ Boogle is a word game where players try to find as many words as possible from a
 5. At the end of the game, the final scores and the winner are displayed, and a word cloud is generated for each player's found words.
 
 ## Implementation Details
-Not implemenented yet
+Not implemented yet
 
 ## Bonus
 The game includes a bonus feature where the player is an AI that explores all possible positions on the game board to find words in the dictionary. This implementation uses optimization techniques to minimize the search time, such as abandoning search paths that lead to prefixes that do not exist in the dictionary.
