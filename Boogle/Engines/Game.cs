@@ -3,23 +3,36 @@ namespace Boogle.Engines
     public class Game
     {
         Board _board;
-        Dictionary dictionary;  // default language : english "en" | possible other languages : {french: "fr"}
+        Dictionary _dictionary;  // default language : english "en" | possible other languages : {french: "fr"}
 
-        Player player1;
-        Player player2;
+        Player _player1;
+        Player _player2;
 
-        public Game(Board board, string language = "en"){ 
+        // Primary constructor initializes everything
+        public Game(Board board, string language = "en")
+        {
             _board = board;
-            dictionary = new Dictionary(language);
+            _dictionary = new Dictionary(language);
+            _player1 = new Player();
+            _player2 = new Player();
         }
 
-        public Game(int boardWidth, int boardHeight, string language = "en"){
-            _board = new Board(boardWidth, boardHeight);
-            dictionary = new Dictionary(language);
+        // Secondary constructor chains to primary constructor
+        public Game(int boardWidth, int boardHeight, string language = "en")
+            : this(new Board(boardWidth, boardHeight), language) // Calls the primary constructor after creating new board
+        {
+        }
+
+        public Game(string language = "en"): this(new Board(), language) // Constructor if nothing is specified
+        {
+        }
+
+        public void Start(){
+
         }
 
         public void NextTurn(){
-            //template
+            
         }
 
         public bool CheckIfWordExistInDictionary(string word){
@@ -27,12 +40,18 @@ namespace Boogle.Engines
             return false;
         }
 
+        public void CheckWin(){}
+
         public string DictionaryPath{
-            get{return dictionary.FilePath;}
+            get{return _dictionary.FilePath;}
         }
 
-        public Dictionary GetDictionary{
-            get{return dictionary;}
+        public Dictionary Dictionary{
+            get{return _dictionary;}
+        }
+
+        public Board Board{
+            get{return _board;}
         }
     }
 }
