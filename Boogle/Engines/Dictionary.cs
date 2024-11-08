@@ -8,24 +8,24 @@ namespace Boogle.Engines
     {
         readonly List<string> _wordList = []; //store all words in a list 
         readonly string _filePath;
+        readonly string _languageName;
 
-        readonly string _language;
-
-        public Dictionary(string language)
+        public Dictionary(string languageID)
         {
-            switch (language){
+            switch (languageID){
                 case "en":
                     _filePath = Path.Combine("..", "Boogle", "Utils", "english_dictionary");
+                    _languageName = "english";
                     break;
                 case "fr":
                     _filePath = Path.Combine("..", "Boogle", "Utils", "french_dictionary");
+                    _languageName = "french";
                     break;
                 default:
                     throw new ArgumentException("Unsupported language.");
             } 
 
             _filePath = Path.GetFullPath(_filePath);
-            _language = language;
             InitWords();
         }
 
@@ -68,19 +68,8 @@ namespace Boogle.Engines
             foreach (KeyValuePair<char, int> kvp in wordsByLetter){
                 Console.WriteLine(string.Format("There is {0} words which starts with the letter {1}", kvp.Value, kvp.Key));
             }
-            
-            string currentLanguage;
-            switch (_language){
-                case "en":
-                    currentLanguage = "english";
-                    break;
-                case "fr":
-                    currentLanguage = "french";
-                    break;
-                default:
-                    throw new ArgumentException("Unsupported language.");
-            } 
-            Console.WriteLine(string.Format("There is {0} words in {1}", _wordList.Count, currentLanguage));
+
+            Console.WriteLine(string.Format("There is {0} words in {1}", _wordList.Count, _languageName));
         }
 
         public bool RechDichoRecursif(string word, int left = 0, int right = -1)
