@@ -14,5 +14,6 @@ static class Program
         Application.Run(new Form1());
 
         int a;
+        int b;
     }    
 }
