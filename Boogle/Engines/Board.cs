@@ -7,14 +7,14 @@ namespace Boogle.Engines
         private int boardWidth;
         private int boardHeight;
         private int caseNumbers;
-        private char[,] board;
+        private Dice[,] board;
 
         public Board(int boardWidth, int boardHeight)
         {
             this.boardWidth = boardWidth;
             this.boardHeight = boardHeight;
             caseNumbers = boardWidth * boardHeight;
-            board = new char[boardWidth, boardHeight];
+            board = new Dice[boardWidth, boardHeight];
         }
         
         /// <summary>
@@ -23,28 +23,23 @@ namespace Boogle.Engines
         /// </summary>
         public void BoardGenerator()
         {
-            Random random = new Random();
-            int num;
-            char randomLetter;
             for (int row = 0; row < boardWidth; row++)
             {
                 for (int col = 0; col < boardHeight; col++)
                 {
-                    num = random.Next(0, 26);
-                    randomLetter = (char)('A' + num);
-                    board[row, col] = randomLetter;
+                    board[row, col] = new Dice();
                 }
             }
         }
         /// <summary>
-        /// 
+        /// Console Debugging Purpose
         /// </summary>
         public void PrintBoard()
         {
             int index = 0;
-            foreach (char letter in board)
+            foreach (Dice dice in board)
             {
-                Console.Write(letter);
+                Console.Write("{0} ", dice.CurrentLetter);
                 index++;
                 if (index % boardWidth == 0 && index < caseNumbers)
                 {
