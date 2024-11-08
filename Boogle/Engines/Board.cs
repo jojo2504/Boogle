@@ -4,17 +4,17 @@ namespace Boogle.Engines
 {
     public class Board
     {
-        private int boardWidth;
-        private int boardHeight;
-        private int caseNumbers;
-        private Dice[,] board;
+        int _boardWidth;
+        int _boardHeight;
+        int _caseNumbers;
+        Dice[,] _board;
 
-        public Board(int boardWidth, int boardHeight)
+        public Board(int boardWidth = 4, int boardHeight = 4)
         {
-            this.boardWidth = boardWidth;
-            this.boardHeight = boardHeight;
-            caseNumbers = boardWidth * boardHeight;
-            board = new Dice[boardWidth, boardHeight];
+            _boardWidth = boardWidth;
+            _boardHeight = boardHeight;
+            _caseNumbers = boardWidth * boardHeight;
+            _board = new Dice[boardWidth, boardHeight];
         }
         
         /// <summary>
@@ -23,11 +23,11 @@ namespace Boogle.Engines
         /// </summary>
         public void BoardGenerator()
         {
-            for (int row = 0; row < boardWidth; row++)
+            for (int row = 0; row < _boardWidth; row++)
             {
-                for (int col = 0; col < boardHeight; col++)
+                for (int col = 0; col < _boardHeight; col++)
                 {
-                    board[row, col] = new Dice();
+                    _board[row, col] = new Dice();
                 }
             }
         }
@@ -37,27 +37,28 @@ namespace Boogle.Engines
         public void PrintBoard()
         {
             int index = 0;
-            foreach (Dice dice in board)
+            foreach (Dice dice in _board)
             {
                 Console.Write("{0} ", dice.CurrentLetter);
                 index++;
-                if (index % boardWidth == 0 && index < caseNumbers)
+                if (index % _boardWidth == 0 && index < _caseNumbers)
                 {
                     Console.WriteLine();
                 }
             }
+            Console.WriteLine();
         }
         
         public int BoardWidth
         {
-            get { return boardWidth; }
-            set { boardWidth = value; }
+            get { return _boardWidth; }
+            set { _boardWidth = value; }
         }
 
         public int BoardHeight
         {
-            get { return boardHeight; }
-            set { boardHeight = value; }
+            get { return _boardHeight; }
+            set { _boardHeight = value; }
         }
     }
 }
