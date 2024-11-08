@@ -6,7 +6,7 @@ namespace Boogle.Engines
 {
     public class Dictionary
     {
-        readonly HashSet<string> _wordSet = []; //store all words in a set 
+        readonly List<string> _wordList = []; //store all words in a list 
         readonly string _filePath;
 
         readonly string _language;
@@ -37,14 +37,16 @@ namespace Boogle.Engines
 
             foreach (string word in wordArray)
             {
-                _wordSet.Add(word);
+                _wordList.Add(word);
             }
+
+            _wordList.Sort();
         }
 
         public void toString(){
             Dictionary<int, int> wordsByLength = new Dictionary<int, int>();
             Dictionary<char, int> wordsByLetter = new Dictionary<char,int>();
-            foreach (string word in _wordSet){
+            foreach (string word in _wordList){
                 if (!wordsByLength.Keys.Contains(word.Length)){
                     wordsByLength.Add(word.Length, 1);
                 }
@@ -78,12 +80,41 @@ namespace Boogle.Engines
                 default:
                     throw new ArgumentException("Unsupported language.");
             } 
-            Console.WriteLine(string.Format("There is {0} words in {1}", _wordSet.Count, currentLanguage));
+            Console.WriteLine(string.Format("There is {0} words in {1}", _wordList.Count, currentLanguage));
         }
 
+        public bool RechDichoRecursif(string word, int left = 0, int right = -1)
+        {
+            bool Helper(string word, int left, int right)
+            {
+                if (left > right){
+                    return false;
+                }
+
+                int mid = (left + right) / 2;
+                int comparaison = string.Compare(word, _wordList[mid]);
+
+                if (comparaison == 0){
+                    return true;
+                }
+                else if (comparaison < 0){
+                    return Helper(word, left, mid-1);
+                }
+                else {
+                    return Helper(word, mid+1, right);
+                }
+            }   
+        
+            // Set right to _wordList.Count - 1 if it’s the default value (-1)
+            if (right == -1)
+            {
+                right = _wordList.Count - 1;
+            }
+            return Helper(word, left, right);
+        } 
         public void Print()
         {
-            Console.WriteLine(_wordSet.Count);
+            Console.WriteLine(_wordList.Count);
         }
 
         public string FilePath { get { return _filePath; }}
