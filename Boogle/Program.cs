@@ -1,4 +1,5 @@
 using Boogle.Engines;
+using System.Threading.Tasks;
 
 namespace Boogle;
 
@@ -13,27 +14,24 @@ static class Program
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
-        //Application.Run(new Form1());
-        
-        Board board = new Board(4, 4);
-        Game game = new Game(board);
+        Application.Run(new Form1());
 
+        Board board = new Board(10, 10);
+        Game game = new Game(board, ["en", "fr"]);
         game.Board.BoardGenerator();
+
+        Console.WriteLine(string.Join(',',game.Board[0,0].Faces));
+
+        game.Board.RollAllDices();
         game.Board.PrintBoard();
-        game.Dictionary.Print();
-
-        game.Dictionary.toString();
-
-        Console.WriteLine(game.Dictionary.RechDichoRecursif("TERRACED"));
-        Console.WriteLine(game.Dictionary.RechDichoRecursif("TERRACEDKJ"));
     }    
 
     /// <summary>
     /// Debugging purpose, do NOT touch if you don't know what it is
+    /// dotnet run --property:OutputType=Exe
     /// </summary>
     #region
     [System.Runtime.InteropServices.DllImport("kernel32.dll")]
     private static extern bool AllocConsole();
     #endregion
 }
-

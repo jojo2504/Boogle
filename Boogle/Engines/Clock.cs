@@ -56,5 +56,9 @@ namespace Boogle.Engines
                 Console.WriteLine("Countdown clock stopped.");
             }
         }
+
+        public int GetTimeRemaining(){
+            return _remainingTimeInSeconds;
+        }
     }
 }

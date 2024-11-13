@@ -2,7 +2,7 @@ using System;
 
 namespace Boogle.Engines
 {
-    public class Board
+    internal class Board
     {
         int _boardWidth;
         int _boardHeight;
@@ -49,6 +49,11 @@ namespace Boogle.Engines
             Console.WriteLine();
         }
         
+        public void RollAllDices(){
+            foreach (Dice dice in _board){
+                dice.RollDice();
+            }
+        }
         public int BoardWidth
         {
             get { return _boardWidth; }
@@ -59,6 +64,10 @@ namespace Boogle.Engines
         {
             get { return _boardHeight; }
             set { _boardHeight = value; }
+        }
+
+        public Dice this[int x, int y]{
+            get { return _board[x,y];}
         }
     }
 }

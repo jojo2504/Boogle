@@ -1,6 +1,10 @@
+using KaimiraGames;
+
 namespace Boogle.Engines{
     class Dice{
-        Random _random = new Random();
+        readonly WeightedList<char> _weightedList = InitializeWeight();
+
+        readonly Random _random = new Random();
         char[] _faces;
         int _currentFace;
 
@@ -9,13 +13,37 @@ namespace Boogle.Engines{
             GenerateFaces();
         }
 
+        private static WeightedList<char> InitializeWeight(){
+            WeightedList<char> weightedList = new();
+            
+            string filePath = Path.Combine("..", "Boogle", "Utils", "letters");
+            try
+            {
+                // Create a StreamReader
+                using (StreamReader streamReader = new StreamReader(Path.Combine(filePath))){
+                    string line;
+                    while ((line = streamReader.ReadLine()) != null)
+                    {
+                        string[] parts = line.Split(';');
+                        if (parts.Length == 3 &&
+                            char.TryParse(parts[0], out char letter) &&
+                            int.TryParse(parts[2], out int weight))
+                        {
+                            weightedList.Add(letter, weight);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex){
+                Console.WriteLine(ex.Message);
+            }
+
+            return weightedList;
+        }
+
         public void GenerateFaces(){
-            int num;
-            char randomLetter;
             for(int i=0; i<_faces.Length; i++){
-                num = _random.Next(0, 26);
-                randomLetter = (char)('A' + num);
-                _faces[i] = randomLetter;
+                _faces[i] = _weightedList.Next(); //returns a random letter based on the weightedList
             }
         }
 
@@ -23,12 +51,8 @@ namespace Boogle.Engines{
             _currentFace = _random.Next(0, _faces.Length-1);
         }
 
-        public int CurrentFace{
-            get{return _currentFace;}
-        }
-
-        public char CurrentLetter{
-            get{return _faces[_currentFace];}
-        }
+        public int CurrentFace => _currentFace;
+        public char CurrentLetter => _faces[_currentFace];
+        public char[] Faces => _faces;
     }
 }

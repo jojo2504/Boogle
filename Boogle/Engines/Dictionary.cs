@@ -8,29 +8,30 @@ namespace Boogle.Engines
     {
         readonly List<string> _wordList = []; //store all words in a list 
         readonly string _filePath;
+        readonly string _languageName;
 
-        readonly string _language;
-
-        public Dictionary(string language)
-        {
-            switch (language){
-                case "en":
+        public Dictionary(List<string> languageIDs){
+            foreach (string languageID in languageIDs){
+                Console.WriteLine("" + languageID);
+                if (languageID == "en"){
                     _filePath = Path.Combine("..", "Boogle", "Utils", "english_dictionary");
-                    break;
-                case "fr":
-                    _filePath = Path.Combine("..", "Boogle", "Utils", "french_dictionary");
-                    break;
-                default:
-                    throw new ArgumentException("Unsupported language.");
-            } 
-
-            _filePath = Path.GetFullPath(_filePath);
-            _language = language;
-            InitWords();
+                    _filePath = Path.GetFullPath(_filePath);
+                    InitWords(_filePath);
+                }
+                if (languageID == "fr"){
+                    _filePath = Path.Combine("..", "Boogle", "Utils", "english_dictionary");
+                    _filePath = Path.GetFullPath(_filePath);
+                    InitWords(_filePath);
+                }
+                if (_wordList.Count > 0){
+                    _wordList.Distinct().ToList();
+                }
+                _wordList.Sort();
+            }
         }
 
-        public void InitWords(){
-            string words = File.ReadAllLines(_filePath)[0];
+        public void InitWords(string filePath){
+            string words = File.ReadAllLines(filePath)[0];
             
             // Split the text into words (assuming they are separated by spaces)
             string[] wordArray = words.Split([' ', '\t', '\n', '\r'], StringSplitOptions.RemoveEmptyEntries);
@@ -39,8 +40,6 @@ namespace Boogle.Engines
             {
                 _wordList.Add(word);
             }
-
-            _wordList.Sort();
         }
 
         public void toString(){
@@ -68,23 +67,12 @@ namespace Boogle.Engines
             foreach (KeyValuePair<char, int> kvp in wordsByLetter){
                 Console.WriteLine(string.Format("There is {0} words which starts with the letter {1}", kvp.Value, kvp.Key));
             }
-            
-            string currentLanguage;
-            switch (_language){
-                case "en":
-                    currentLanguage = "english";
-                    break;
-                case "fr":
-                    currentLanguage = "french";
-                    break;
-                default:
-                    throw new ArgumentException("Unsupported language.");
-            } 
-            Console.WriteLine(string.Format("There is {0} words in {1}", _wordList.Count, currentLanguage));
+
+            Console.WriteLine(string.Format("There is {0} words in {1}", _wordList.Count, _languageName));
         }
 
         public bool RechDichoRecursif(string word, int left = 0, int right = -1)
-        {
+        {   
             bool Helper(string word, int left, int right)
             {
                 if (left > right){
@@ -103,7 +91,7 @@ namespace Boogle.Engines
                 else {
                     return Helper(word, mid+1, right);
                 }
-            }   
+            }
         
             // Set right to _wordList.Count - 1 if it’s the default value (-1)
             if (right == -1)
