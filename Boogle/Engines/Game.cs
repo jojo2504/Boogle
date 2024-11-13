@@ -1,43 +1,43 @@
 namespace Boogle.Engines
 {
-    public class Game
+    internal class Game
     {
         Board _board;
-        Dictionary _dictionary;  // default language : english "en" | possible other languages : {french: "fr"}
+
+        public List<string> languages = [];
+        Dictionary _dictionary;  // default language : {english "en"} | possible other languages : {french: "fr"}
 
         Player _player1;
         Player _player2;
 
-        // Primary constructor initializes everything
-        public Game(Board board, string language = "en")
-        {
+        Clock _clock;
+
+        //primary constructor
+        public Game(Board board, List<string> languages){
             _board = board;
-            _dictionary = new Dictionary(language);
-            _player1 = new Player();
-            _player2 = new Player();
+            _dictionary = new Dictionary(languages);
+            _clock = new Clock();
         }
-
-        // Secondary constructor chains to primary constructor
-        public Game(int boardWidth, int boardHeight, string language = "en")
-            : this(new Board(boardWidth, boardHeight), language) // Calls the primary constructor after creating new board
+        
+        public Game(int boardWidth, int boardHeight, List<string> languages)
+            : this(new Board(boardWidth, boardHeight), languages) // Calls the primary constructor after creating new board
         {
         }
 
-        public Game(string language = "en"): this(new Board(), language) // Constructor if nothing is specified
+        public Game(List<string> languages): this(new Board(), languages) // Constructor if nothing is specified
         {
+        }
+
+        public void StartClock(){
+            _clock.Start();
         }
 
         public void Start(){
-
+            
         }
 
         public void NextTurn(){
             
-        }
-
-        public bool CheckIfWordExistInDictionary(string word){
-            //template
-            return false;
         }
 
         public void CheckWin(){}
@@ -52,6 +52,10 @@ namespace Boogle.Engines
 
         public Board Board{
             get{return _board;}
+        }
+
+        public Clock Clock{
+            get{return _clock;}
         }
     }
 }

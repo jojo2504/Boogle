@@ -1,0 +1,3 @@
+[submodule "Boogle/Utils/KaimiraWeightedList"]
+	path = Boogle/Utils/KaimiraWeightedList
+	url = git@github.com:cdanek/KaimiraWeightedList.git
