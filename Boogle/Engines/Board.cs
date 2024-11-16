@@ -34,19 +34,26 @@ namespace Boogle.Engines
         /// <summary>
         /// Console Debugging Purpose
         /// </summary>
-        public void PrintBoard()
+        public string PrintBoard()
         {
             int index = 0;
+            string chainDescribeBoard = "";
             foreach (Dice dice in _board)
             {
-                Console.Write("{0} ", dice.CurrentLetter);
+                chainDescribeBoard += string.Format("{0} ", dice.CurrentLetter);
                 index++;
                 if (index % _boardWidth == 0 && index < _caseNumbers)
                 {
-                    Console.WriteLine();
+                    chainDescribeBoard += "\n";
                 }
             }
-            Console.WriteLine();
+            chainDescribeBoard += "\n";  
+            return chainDescribeBoard;          
+        }
+
+        public string toString()
+        {
+            return string.Format("This board is a {0}*{1} with {3} dices.",_boardHeight,_boardWidth,_caseNumbers);
         }
         
         public void RollAllDices(){

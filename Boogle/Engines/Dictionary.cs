@@ -8,7 +8,6 @@ namespace Boogle.Engines
     {
         readonly List<string> _wordList = []; //store all words in a list 
         readonly string _filePath;
-        readonly string _languageName;
 
         public Dictionary(List<string> languageIDs){
             foreach (string languageID in languageIDs){
@@ -60,15 +59,15 @@ namespace Boogle.Engines
                     wordsByLetter[word[0]]++;
                 }
             }
-            
+            string chainDescribeDictionary = "";
             foreach (KeyValuePair<int, int> kvp in wordsByLength){
-                Console.WriteLine(string.Format("There is {0} words of length {1}", kvp.Value, kvp.Key));
+                chainDescribeDictionary += string.Format("There is {0} words of length {1}\n", kvp.Value, kvp.Key);
             }
             foreach (KeyValuePair<char, int> kvp in wordsByLetter){
-                Console.WriteLine(string.Format("There is {0} words which starts with the letter {1}", kvp.Value, kvp.Key));
+                chainDescribeDictionary += string.Format("There is {0} words which starts with the letter {1}\n", kvp.Value, kvp.Key);
             }
 
-            Console.WriteLine(string.Format("There is {0} words in {1}", _wordList.Count, _languageName));
+            chainDescribeDictionary += string.Format("There is {0} words in {1}", _wordList.Count);
         }
 
         public bool RechDichoRecursif(string word, int left = 0, int right = -1)
