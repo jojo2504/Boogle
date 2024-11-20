@@ -8,6 +8,9 @@ namespace Boogle.Engines
     {
         readonly List<string> _wordList = []; //store all words in a list 
         readonly string _filePath;
+        Dictionary<int, List<string>> _prefixDictionary;
+
+        TrieNode _root = new TrieNode();
 
         public Dictionary(List<string> languageIDs){
             foreach (string languageID in languageIDs){
@@ -18,7 +21,7 @@ namespace Boogle.Engines
                     InitWords(_filePath);
                 }
                 if (languageID == "fr"){
-                    _filePath = Path.Combine("..", "Boogle", "Utils", "english_dictionary");
+                    _filePath = Path.Combine("..", "Boogle", "Utils", "french_dictionary");
                     _filePath = Path.GetFullPath(_filePath);
                     InitWords(_filePath);
                 }
@@ -37,6 +40,8 @@ namespace Boogle.Engines
 
             foreach (string word in wordArray)
             {
+                if (word.Contains("'")) continue;
+                Trie.InsertKey(_root, word);
                 _wordList.Add(word);
             }
         }
@@ -67,7 +72,7 @@ namespace Boogle.Engines
                 chainDescribeDictionary += string.Format("There is {0} words which starts with the letter {1}\n", kvp.Value, kvp.Key);
             }
 
-            chainDescribeDictionary += string.Format("There is {0} words in {1}", _wordList.Count);
+            chainDescribeDictionary += string.Format("There is {0} words in the current dictionary", _wordList.Count);
         }
 
         public bool RechDichoRecursif(string word, int left = 0, int right = -1)
@@ -104,6 +109,8 @@ namespace Boogle.Engines
             Console.WriteLine(_wordList.Count);
         }
 
-        public string FilePath { get { return _filePath; }}
+        public string FilePath => _filePath;
+        public Dictionary<int, List<string>> PrefixDictionary => _prefixDictionary;
+        public TrieNode Root => _root;
     }
 }
