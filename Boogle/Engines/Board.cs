@@ -35,7 +35,7 @@ namespace Boogle.Engines
                     _matrix[row, col] = _board[row, col].CurrentLetter;
                 }
             }
-            _graph = new MatrixGraphBuilder<char>(_matrix);
+            _graph = new MatrixGraphBuilder<char>(_matrix, true);
         }
 
         public void UpdateMatrix(){
@@ -46,6 +46,7 @@ namespace Boogle.Engines
                     _matrix[row, col] = _board[row, col].CurrentLetter;
                 }
             }
+            _graph.SetMatrix(_matrix);
         }
 
         /// <summary>
@@ -87,11 +88,11 @@ namespace Boogle.Engines
         /// <param name="word"></param>
         /// <returns></returns>
         public List<string> getAllValidWordsInBoard(TrieNode trieNode){
-            List<string> allFormedString = [];
+            HashSet<string> allFormedStrings = new();
+            bool[,] visited = new bool[_boardWidth,_boardHeight];
             
             //loop through all the key node and perform dfs on every one of them
             foreach (Node<char> node in _graph.Graph.Keys){
-                bool[,] visited = new bool[_boardWidth,_boardHeight];
                 //every start of path starts as an empty string prefix
                 string prefix = "";
                 DFS(visited, node, prefix);
@@ -116,7 +117,7 @@ namespace Boogle.Engines
 
                 if (Trie.SearchKey(trieNode, dfsPrefix)){
                     // if the current prefix matches one of the final word in the trie, then add it to the list of possible words
-                    allFormedString.Add(dfsPrefix);
+                    allFormedStrings.Add(dfsPrefix);
                 }
 
                 // Recursively visit all adjacent vertices
@@ -131,7 +132,7 @@ namespace Boogle.Engines
                     }
                 }
             }
-            return allFormedString.Distinct().ToList();
+            return allFormedStrings.ToList();
         }
         
         public void RollAllDices(){
