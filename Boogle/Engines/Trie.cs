@@ -34,7 +34,7 @@ namespace Boogle.Engines{
         }
 
         // Method to search a key in the Trie
-        public static bool SearchKey(TrieNode root, string key)
+        public static bool SearchKey(TrieNode root, ReadOnlySpan<char> key)
         {
             // Initialize the curr pointer with the root node
             TrieNode curr = root;
@@ -57,7 +57,7 @@ namespace Boogle.Engines{
             return curr.WordEnd;
         }
 
-        public static bool SearchPrefix(TrieNode root, string key){
+        public static bool SearchPrefix(TrieNode root, ReadOnlySpan<char> key){
             // Initialize the curr pointer with the root node
             TrieNode currentPointer = root;
 

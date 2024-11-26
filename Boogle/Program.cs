@@ -16,21 +16,22 @@ static class Program
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
         //Application.Run(new Form1());
-        Game game = new Game(10, 10, ["fr"]);
-        game.Board.BoardGenerator();
-        Console.WriteLine(game.Board.PrintBoard());
-        List<string> valid_words = [];
-
         Stopwatch stopwatch = new Stopwatch();
+        char[,] board = new char[,]
+        {
+            { 'E', 'N', 'I', 'A' },
+            { 'O', 'L', 'T', 'S' },
+            { 'D', 'R', 'E', 'D' },
+            { 'N', 'E', 'E', 'O' }
+        };
+        Game game = new Game(50, 50, ["fr","en"]);
         stopwatch.Start();
-        List<string> words = game.Board.getAllValidWordsInBoard(game.Dictionary.Root);
-        foreach (string word in words){
-            if (game.Dictionary.RechDichoRecursif(word)){
-                valid_words.Add(word);
-            };
-        }
+        game.Board.getAllValidWordsOnBoard(game.Board.Dictionary.Root);
         stopwatch.Stop();
-    }    
+        Console.WriteLine(stopwatch.ElapsedMilliseconds);
+
+        //Console.WriteLine(game.Dictionary.RechDichoRecursif("DE"));
+    }       
 
     /// <summary>
     /// Debugging purpose, do NOT touch if you don't know what it is

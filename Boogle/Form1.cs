@@ -244,7 +244,6 @@ public partial class Form1 : Form
         if (checkBoxEnglish.Checked) languages.Add("en");
         //Console.WriteLine(string.Join(", ", languages));
         InitializeGame(languages);
-        _game.Dictionary.toString();
 
         Console.WriteLine($"Player 1: {player1}");
         Console.WriteLine($"Player 2: {player2}");

@@ -7,10 +7,11 @@ namespace Boogle.Engines
         int _boardWidth;
         int _boardHeight;
         int _caseNumbers;
-        List<string> validWords = [];
+        SortedList<string, string> _validWords;
         Dice[,] _board;
         char[,] _matrix;
-        MatrixGraphBuilder<char> _graph;
+        Dictionary _dictionary;
+        MatrixGraphBuilder<char> _graph = new MatrixGraphBuilder<char>(includeDiagonals: true);
 
         public Board(int boardWidth = 4, int boardHeight = 4)
         {
@@ -19,6 +20,8 @@ namespace Boogle.Engines
             _caseNumbers = boardWidth * boardHeight;
             _board = new Dice[boardWidth, boardHeight];
             _matrix = new char[_boardWidth,_boardHeight];
+
+            BoardGenerator();
         }
         
         /// <summary>
@@ -35,7 +38,7 @@ namespace Boogle.Engines
                     _matrix[row, col] = _board[row, col].CurrentLetter;
                 }
             }
-            _graph = new MatrixGraphBuilder<char>(_matrix, true);
+            _graph.SetMatrix(_matrix);
         }
 
         public void UpdateMatrix(){
@@ -53,7 +56,7 @@ namespace Boogle.Engines
         /// Console Debugging Purpose
         /// </summary>
         public string PrintBoard()
-        {
+        {   
             int index = 0;
             string chainDescribeBoard = "";
             foreach (Dice dice in _board)
@@ -74,29 +77,42 @@ namespace Boogle.Engines
         }
 
         public bool checkValidWord(string word){
-            return validWords.Contains(word);
+            return _dictionary.RechDichoRecursif(_validWords, word);
         }
 
         /// <summary>
         /// Trying to find every valid words based on the current board.
         /// 
-        /// This algorithm will use a Depth-First Search (DFS) approach in a graph theory by cutting impossible paths through the board.
-        /// We will explore each Depth of the letter then follows path where it is possible.
-        /// For this purpose, we will implement a new class called Graph which has a method to convert a 2 dimensional matrix into a graph.
-        /// After everyone possible formed words has been found, we will then pass them through the dictionary to know if the word exists or not.
+        /// This algorithm will use a Depth-First Search (DFS) approach in graph theory by cutting impossible non existant prefixes
+        /// through the board.
+        /// 
+        /// For this purpose, we will implement a new class called Graph which can convert a 2 dimensional matrix into a graph.
+        /// and will implement a trie data structure to track prefixes of all words composed in the language dictionaries.
+        /// 
+        /// By implementing the Trie Class, RechDichoRecursif becomes irrelevent to use on the whole dictionary but can be used instead
+        /// on the output of the 'getAllValidWordsInBoard()' method which contains every possible words playable on the board.
         /// </summary>
-        /// <param name="word"></param>
+        /// <param name="trieNode"></param>
         /// <returns></returns>
-        public List<string> getAllValidWordsInBoard(TrieNode trieNode){
-            HashSet<string> allFormedStrings = new();
-            bool[,] visited = new bool[_boardWidth,_boardHeight];
-            
+        public SortedList<string,string> getAllValidWordsOnBoard(TrieNode trieNode, char[,]? testBoard = null){
+            if (testBoard != null){
+                _boardHeight = testBoard.GetLength(0);
+                _boardWidth = testBoard.GetLength(1);
+                _graph.SetMatrix(testBoard);
+            }
+            SortedList<string,string> sortedWordList = new();
+            bool[,] visited;
+
             //loop through all the key node and perform dfs on every one of them
             foreach (Node<char> node in _graph.Graph.Keys){
+                //Console.Write("{0} ", node.Value);
                 //every start of path starts as an empty string prefix
-                string prefix = "";
-                DFS(visited, node, prefix);
+                visited = new bool[_boardWidth,_boardHeight];
+                //Console.Write(string.Join(" ", visited));
+
+                DFS(visited, node, string.Empty);
             }
+            //Console.WriteLine("");
 
             void DFS(bool[,] visited, Node<char> node, string currentPrefix){
                 // Check if this node has already been visited
@@ -117,7 +133,7 @@ namespace Boogle.Engines
 
                 if (Trie.SearchKey(trieNode, dfsPrefix)){
                     // if the current prefix matches one of the final word in the trie, then add it to the list of possible words
-                    allFormedStrings.Add(dfsPrefix);
+                    sortedWordList[dfsPrefix] = dfsPrefix;
                 }
 
                 // Recursively visit all adjacent vertices
@@ -132,7 +148,7 @@ namespace Boogle.Engines
                     }
                 }
             }
-            return allFormedStrings.ToList();
+            return sortedWordList;
         }
         
         public void RollAllDices(){
@@ -141,20 +157,17 @@ namespace Boogle.Engines
             }
             UpdateMatrix();
         }
-        public int BoardWidth
-        {
-            get { return _boardWidth; }
-            set { _boardWidth = value; }
-        }
 
-        public int BoardHeight
-        {
-            get { return _boardHeight; }
-            set { _boardHeight = value; }
+        public int BoardWidth => _boardWidth;
+        public int BoardHeight => _boardHeight;
+        public Dice this[int x, int y] => _board[x,y];
+        public Dictionary Dictionary{
+            set { 
+                _dictionary = value;
+                _validWords = getAllValidWordsOnBoard(_dictionary.Root);
+            }
+            get { return _dictionary;}
         }
-
-        public Dice this[int x, int y]{
-            get { return _board[x,y];}
-        }
+        public SortedList<string, string> ValidWords => _validWords;
     }
 }
