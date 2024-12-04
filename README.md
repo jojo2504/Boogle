@@ -1,5 +1,15 @@
 # Boogle Game
 
+## Summary
+- [Introduction](https://github.com/jojo2504/Boogle?tab=readme-ov-file#introduction)
+- [Features (TODO)](https://github.com/jojo2504/Boogle?tab=readme-ov-file#features-todo)
+- [Features (DONE)](https://github.com/jojo2504/Boogle?tab=readme-ov-file#features-done)
+- [Getting Started (For Custom Building)](https://github.com/jojo2504/Boogle?tab=readme-ov-file#getting-started-for-custom-building)
+- [Usage](https://github.com/jojo2504/Boogle?tab=readme-ov-file#usage)
+- [Implementation Details](https://github.com/jojo2504/Boogle?tab=readme-ov-file#implementation-details)
+- [Known Bugs](https://github.com/jojo2504/Boogle?tab=readme-ov-file#known-bug)
+- [Path of work](https://github.com/jojo2504/Boogle?tab=readme-ov-file#path-of-work)
+
 ## Introduction
 Boogle is a word game where players try to find as many words as possible from a grid of randomly generated letters within a given time limit. The game is designed to be played by two or more players, and the player with the highest score at the end of the game is declared the winner.
 ### This repository is a project for A2 students in computer sciences.
