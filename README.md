@@ -7,8 +7,8 @@
 - [Getting Started (For Custom Building)](https://github.com/jojo2504/Boogle?tab=readme-ov-file#getting-started-for-custom-building)
 - [Usage](https://github.com/jojo2504/Boogle?tab=readme-ov-file#usage)
 - [Implementation Details](https://github.com/jojo2504/Boogle?tab=readme-ov-file#implementation-details)
-- [Known Bugs](https://github.com/jojo2504/Boogle?tab=readme-ov-file#known-bugs)
 - [Path of work](https://github.com/jojo2504/Boogle?tab=readme-ov-file#path-of-work)
+- [Known Bugs](https://github.com/jojo2504/Boogle?tab=readme-ov-file#known-bugs)
 
 ## Introduction
 Boogle is a word game where players try to find as many words as possible from a grid of randomly generated letters within a given time limit. The game is designed to be played by two or more players, and the player with the highest score at the end of the game is declared the winner.
@@ -46,9 +46,9 @@ Boogle is a word game where players try to find as many words as possible from a
 ## Implementation Details
 For the User Interface, the solution will be a **Winform**.
 
-## Known Bugs
-
 ## Path of work
+
+## Known Bugs
 
 ## Bonus
 The game includes a bonus feature where the player is an AI that explores all possible positions on the game board to find words in the dictionary. This implementation uses optimization techniques to minimize the search time, such as abandoning search paths that lead to prefixes that do not exist in the dictionary.
