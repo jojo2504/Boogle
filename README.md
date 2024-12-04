@@ -7,7 +7,7 @@
 - [Getting Started (For Custom Building)](https://github.com/jojo2504/Boogle?tab=readme-ov-file#getting-started-for-custom-building)
 - [Usage](https://github.com/jojo2504/Boogle?tab=readme-ov-file#usage)
 - [Implementation Details](https://github.com/jojo2504/Boogle?tab=readme-ov-file#implementation-details)
-- [Known Bugs](https://github.com/jojo2504/Boogle?tab=readme-ov-file#known-bug)
+- [Known Bugs](https://github.com/jojo2504/Boogle?tab=readme-ov-file#known-bugs)
 - [Path of work](https://github.com/jojo2504/Boogle?tab=readme-ov-file#path-of-work)
 
 ## Introduction
