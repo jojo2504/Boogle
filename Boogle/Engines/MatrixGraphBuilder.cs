@@ -3,7 +3,7 @@ using System.Text;
 namespace Boogle.Engines{
     public class MatrixGraphBuilder<T>
     {
-        readonly Dictionary<Node<T>, HashSet<Node<T>>>? _graph = new Dictionary<Node<T>, HashSet<Node<T>>>();
+        readonly Dictionary<Node<T>, HashSet<Node<T>>> _graph = new Dictionary<Node<T>, HashSet<Node<T>>>();
         readonly bool _includeDiagonals;
 
         public MatrixGraphBuilder(T[,] matrix, bool includeDiagonals = false){
@@ -96,7 +96,7 @@ namespace Boogle.Engines{
             return stringBuilder.ToString().TrimEnd();
         }
 
-        public Dictionary<Node<T>, HashSet<Node<T>>>? Graph => _graph;
+        public Dictionary<Node<T>, HashSet<Node<T>>> Graph => _graph;
         public bool IncludeDiagonals => _includeDiagonals;
     }
     public readonly struct Node<T>

@@ -108,11 +108,8 @@ namespace Boogle.Engines
                 //Console.Write("{0} ", node.Value);
                 //every start of path starts as an empty string prefix
                 visited = new bool[_boardWidth,_boardHeight];
-                //Console.Write(string.Join(" ", visited));
-
                 DFS(visited, node, string.Empty);
             }
-            //Console.WriteLine("");
 
             void DFS(bool[,] visited, Node<char> node, string currentPrefix){
                 // Check if this node has already been visited
