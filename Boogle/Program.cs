@@ -1,4 +1,5 @@
 using Boogle.Engines;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Boogle;
@@ -14,17 +15,23 @@ static class Program
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
-        Application.Run(new Form1());
+        //Application.Run(new Form1());
+        Stopwatch stopwatch = new Stopwatch();
+        char[,] board = new char[,]
+        {
+            { 'E', 'N', 'I', 'A' },
+            { 'O', 'L', 'T', 'S' },
+            { 'D', 'R', 'E', 'D' },
+            { 'N', 'E', 'E', 'O' }
+        };
+        Game game = new Game(50, 50, ["fr","en"]);
+        stopwatch.Start();
+        game.Board.getAllValidWordsOnBoard(game.Board.Dictionary.Root);
+        stopwatch.Stop();
+        Console.WriteLine(stopwatch.ElapsedMilliseconds);
 
-        Board board = new Board(10, 10);
-        Game game = new Game(board, ["en", "fr"]);
-        game.Board.BoardGenerator();
-
-        Console.WriteLine(string.Join(',',game.Board[0,0].Faces));
-
-        game.Board.RollAllDices();
-        game.Board.PrintBoard();
-    }    
+        //Console.WriteLine(game.Dictionary.RechDichoRecursif("DE"));
+    }       
 
     /// <summary>
     /// Debugging purpose, do NOT touch if you don't know what it is

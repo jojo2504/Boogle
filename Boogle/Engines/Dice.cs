@@ -6,7 +6,7 @@ namespace Boogle.Engines{
 
         readonly Random _random = new Random();
         char[] _faces;
-        int _currentFace;
+        int _currentIndexFace;
 
         public Dice(int faces = 6){
             _faces = new char[faces]; // ${faces} faces
@@ -46,13 +46,23 @@ namespace Boogle.Engines{
                 _faces[i] = _weightedList.Next(); //returns a random letter based on the weightedList
             }
         }
-
+        // Represent Lance(random r) in Dé
         public void RollDice(){
-            _currentFace = _random.Next(0, _faces.Length-1);
+            _currentIndexFace = _random.Next(0, _faces.Length-1);
         }
 
-        public int CurrentFace => _currentFace;
-        public char CurrentLetter => _faces[_currentFace];
+        public string toString()
+        {
+            string chainDescribeDice = "This die is composed of 6 faces with the value :\n";
+            for(int i = 0; i < _faces.Length; i++)
+            {
+                chainDescribeDice += string.Format("{0} on the n°{1} face\n",_faces[i],i);
+            }
+            return chainDescribeDice;
+        }
+
+        public int CurrentFace => _currentIndexFace;
+        public char CurrentLetter => _faces[_currentIndexFace];
         public char[] Faces => _faces;
     }
 }

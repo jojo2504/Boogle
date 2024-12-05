@@ -7,21 +7,21 @@ namespace Boogle.Engines
     public class Dictionary
     {
         readonly List<string> _wordList = []; //store all words in a list 
-        readonly string _filePath;
-        readonly string _languageName;
+        TrieNode _root = new TrieNode();
 
         public Dictionary(List<string> languageIDs){
+            string filePath;
             foreach (string languageID in languageIDs){
                 Console.WriteLine("" + languageID);
                 if (languageID == "en"){
-                    _filePath = Path.Combine("..", "Boogle", "Utils", "english_dictionary");
-                    _filePath = Path.GetFullPath(_filePath);
-                    InitWords(_filePath);
+                    filePath = Path.Combine("..", "Boogle", "Utils", "english_dictionary");
+                    filePath = Path.GetFullPath(filePath);
+                    InitWords(filePath);
                 }
                 if (languageID == "fr"){
-                    _filePath = Path.Combine("..", "Boogle", "Utils", "english_dictionary");
-                    _filePath = Path.GetFullPath(_filePath);
-                    InitWords(_filePath);
+                    filePath = Path.Combine("..", "Boogle", "Utils", "french_dictionary");
+                    filePath = Path.GetFullPath(filePath);
+                    InitWords(filePath);
                 }
                 if (_wordList.Count > 0){
                     _wordList.Distinct().ToList();
@@ -38,11 +38,13 @@ namespace Boogle.Engines
 
             foreach (string word in wordArray)
             {
+                if (word.Contains("'")) continue;
+                Trie.InsertKey(_root, word);
                 _wordList.Add(word);
             }
         }
 
-        public void toString(){
+        public override string ToString(){
             Dictionary<int, int> wordsByLength = new Dictionary<int, int>();
             Dictionary<char, int> wordsByLetter = new Dictionary<char,int>();
             foreach (string word in _wordList){
@@ -60,18 +62,19 @@ namespace Boogle.Engines
                     wordsByLetter[word[0]]++;
                 }
             }
-            
+            string chainDescribeDictionary = "";
             foreach (KeyValuePair<int, int> kvp in wordsByLength){
-                Console.WriteLine(string.Format("There is {0} words of length {1}", kvp.Value, kvp.Key));
+                chainDescribeDictionary += string.Format("There is {0} words of length {1}\n", kvp.Value, kvp.Key);
             }
             foreach (KeyValuePair<char, int> kvp in wordsByLetter){
-                Console.WriteLine(string.Format("There is {0} words which starts with the letter {1}", kvp.Value, kvp.Key));
+                chainDescribeDictionary += string.Format("There is {0} words which starts with the letter {1}\n", kvp.Value, kvp.Key);
             }
 
-            Console.WriteLine(string.Format("There is {0} words in {1}", _wordList.Count, _languageName));
+            chainDescribeDictionary += string.Format("There is {0} words in the current dictionary", _wordList.Count);
+            return chainDescribeDictionary;
         }
 
-        public bool RechDichoRecursif(string word, int left = 0, int right = -1)
+        public bool RechDichoRecursif(SortedList<string, string> validWords, string word, int left = 0, int right = -1)
         {   
             bool Helper(string word, int left, int right)
             {
@@ -80,7 +83,7 @@ namespace Boogle.Engines
                 }
 
                 int mid = (left + right) / 2;
-                int comparaison = string.Compare(word, _wordList[mid]);
+                int comparaison = string.Compare(word, validWords.Keys[mid]);
 
                 if (comparaison == 0){
                     return true;
@@ -96,15 +99,10 @@ namespace Boogle.Engines
             // Set right to _wordList.Count - 1 if it’s the default value (-1)
             if (right == -1)
             {
-                right = _wordList.Count - 1;
+                right = validWords.Count - 1;
             }
             return Helper(word, left, right);
         } 
-        public void Print()
-        {
-            Console.WriteLine(_wordList.Count);
-        }
-
-        public string FilePath { get { return _filePath; }}
+        public TrieNode Root => _root;
     }
 }
