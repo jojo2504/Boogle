@@ -12,8 +12,8 @@
 - [Known Bugs](https://github.com/jojo2504/Boogle?tab=readme-ov-file#known-bugs)
 
 ## Introduction
-Boogle is a word game where players try to find as many words as possible from a grid of randomly generated letters within a given time limit. The game is designed to be played by two or more players, and the player with the highest score at the end of the game is declared the winner.
-### This repository is a project for A2 students in computer sciences.
+This project explores the design and implementation of a dynamic word game inspired by the popular Boggle game. Our work encompasses a range of tasks, including developing an algorithm to generate a randomized letter grid, implementing efficient word search mechanisms, and ensuring valid word identification using a comprehensive dictionary. We have also focused on creating an engaging user interface, optimizing gameplay mechanics for fairness and fun, and enabling multiplayer functionality for competitive play. Additionally, we analyzed scoring systems, incorporated a timer for added challenge, and tested the application for reliability and usability. This project demonstrates a blend of programming, algorithm design, and user-centric development, offering insights into building interactive games.
+### This repository is a project for A2/S3 students in computer sciences.
 
 ## Features (TODO)
 - Customizable game settings, including the size of the game board and the duration of the game.
@@ -29,13 +29,11 @@ Boogle is a word game where players try to find as many words as possible from a
 - Implement algorithm to find every possible playable words on the current board formed by the dices.
 
 ## Getting Started (For Custom Building)
-1. Clone the repository to your local machine.
-2. Open the solution in your IDE (i.e. VSCode, Rider or Visual Studio).
-3. Build the solution to ensure that all dependencies are satisfied.
-4. Run the project to start the game
-   - Use `dotnet run` if .NET8 is installed on your machine if you're not using any IDE
+1. Clone the repository to your local machine with `git clone --recurse-submodules <repository-url>`
+2. Run the project to start the game
+   - Use `dotnet run` if you're using .NET, .NET version is `8.0`.
    - For debugging purpose use `dotnet run --property:OutputType=Exe` which forces terminal outputs
-5. A prebuild version will be released at the end of the project.
+3. A prebuild version will be released at the end of the project.
 
 ## Usage
 1. Play the game
@@ -46,26 +44,26 @@ Boogle is a word game where players try to find as many words as possible from a
    
 ## Implementation Details
 1. For the User Interface, the solution will be a **Winform**.
-2. Game
-3. Board -> Dice / Dictionary
-4. Trie
-5. Graph
+   
+![UML class model](/markdownassets/UML-class-model.png)
 
 ## Path of work
 ### Chapter 1 : What's the problem ?
 Before starting anything, let's see what we needed to do as for this project.
 
-Recreating the famous boggle by implementing a board which possesses a fixed number of dices, each one having 6 faces with one letter. We will consider in this project a ***non-fixed*** number of letters but a ***weigth based system*** instead.
-This will be a turn based game with a determined time that each player holds at the start of the game.
-
+Recreating the famous boggle by implementing a board which possesses a fixed number of dices, each one having 6 faces with one letter. We will consider this project as having a ***variable number of letters*** but based on a ***weight-based*** system instead of the locked 96 faces and letters. \
 [Thanks to Kaimira for providing an open source weighted list in C#.](https://github.com/cdanek/KaimiraWeightedList)
 
-An essential concept of a the game is the need to validate whether or not an inputted word truly exist on the board. But how ? By searching every paths of course, however everyone knows that it will be way to slow to just brute force the solution. Something that we thought was just easier to do was by abandoning *"useless"* paths, which means prefixes with non existant word within itself. (i.e. In `[Maison, Banane]`, the prefix `Bn` will be abandoned because there is are no words with the prefix `Bn`, in contrary to `Ma` in `Maison`)
+An essential concept of a the game is the need to validate whether or not an inputted word truly exist on the board. But how ? By going through every paths of course, however everyone knows that it will be way to slow to just brute force the solution. Something that we thought was just easier to do was by abandoning *"useless"* paths, which means prefixes with non existant word within itself. (i.e. In `[Maison, Banane]`, the prefix `'Bn'` will be abandoned because there is are no words with the prefix `'Bn'`, in contrary to `'Ma'` in `'Maison'`)
 
 ### Chapter 2 : Downsides of mandatory and required methods
-For this project, our first idea was to collect all the words from given dictionaries (french and/or english) and store them in an array which needed to be sorted to use the mandatory method `RechDichoRecursif` for an element lookup in `O(log(n))` time complexity.
+For this project, our first idea was to collect all the words from given dictionaries
+(french and/or english) and store them in an array which needed to be sorted to use the
+mandatory method `RechDichoRecursif` for an element lookup in `𝑂(log(𝑁))` time complexity.
 
-The problem ? Because we needed process every words and the prefixed, sorting them was in reality pointless, using too much memory and time for little to no results. For example :
+The problem ? Because we needed process every words and their prefixes, sorting them was in
+reality pointless, using too much memory and time for little to no results with `O(𝑁^2)` time complexity. \
+For example :
 ```csharp
 //get every words in the dictionary
 string words = File.ReadAllLines(filePath)[0];
@@ -78,10 +76,19 @@ foreach (string word in wordArray){
 wordArray = wordArray.Sort() 
 
 ```
-But we still didnt proceed any prefixes not their length, which is really really bad.
+But we still didnt proceed any prefixes nor their length, which demonstrate how long and pointless an implementation like this might be.
 
 ### Chapter 3 : Data Structure and algorithm (Trie / Graph)
 That's why we came up with another solution, implementing a `Trie`, a specialized ***tree-like*** data structure that stores a ***dynamic*** set of strings, typically to facilitate fast searching, insertion, and deletion operations. It is particularly useful for managing dictionaries, auto-complete features, and ***prefix-based search***.
+
+**Time Complexity:** Time complexity depends on the length of the word (L)
+- This allow us to insert, search and delete nodes in `𝑂(𝐿)`.
+
+**Space Complexity:** The space complexity depends on:
+- The total number of words, N.
+- The average length of words, L.
+- The number of unique characters in the alphabet, A.
+- Worst-case space complexity: `𝑂(𝐴⋅𝐿⋅𝑁)`
 
 ![Trie Data Structure Illustration](/markdownassets/Triedatastructure1.webp)
 
@@ -99,6 +106,18 @@ For the implementation of the graph, we put in place a custom generic collection
  For example: The board with [A..P], connected vertically, horizontally and diagonally.
 
 ![Graph](/markdownassets/graph.png)
+
+---
+1. V is the number of vertices.
+2. E is the number of edges.
+
+| Graph Representation | Space Complexity | Add Edge Time | Check Edge Time | Traversal Time
+| ------------------ | -------  | ---- | ------ | ------ |
+| Adjacency Matrix   | O(V^2)   | O(1) | O(1)   | O(V^2) |
+| Adjacency List     | O(V+E)   | O(1) | O(deg) | O(V+E) |
+| Edge List          | O(E)     | O(1) | O(E)   | O(E)   |
+
+Here we are using a Adjacency List.
 
 ### Chapter 4 : The hard part, finding every possible playable words on the board
 The core challenge of the Boogle game lies in identifying all the valid words that can be formed on the board using a *combination* of adjacent letters. This involves a combination of Depth-First Search (`DFS`), `Trie`, and `graph` traversal to systematically explore all possible paths and efficiently check whether they form valid words.
