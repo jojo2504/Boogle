@@ -30,11 +30,70 @@ namespace Boogle.Engines
         }
 
         public void Start(){
-            
+            Console.WriteLine("Hello, welcome to the Boogle game :\n\nEnter the name of player 1 :");
+            _player1 = new Player(Console.ReadLine());
+            Console.WriteLine("Enter the name of player 2 :");
+            _player2 = new Player(Console.ReadLine());
+            Console.WriteLine("Select the language you want to play with (en or fr):");
+            languages.Add(Console.ReadLine());
+            _dictionary = new Dictionary(languages);
+            _clock = new Clock();
+            _board = new Board();
+            Console.WriteLine("Enter the number of rounds you want to play : ");
+            int remainingRounds = Convert.ToInt32(Console.ReadLine());
+            Player currentplayer = _player1;
+            while(remainingRounds != 0) 
+            {
+                Turn(currentplayer);
+                remainingRounds--;
+                if (currentplayer == _player1){
+                    currentplayer = _player2;
+                }
+                else{
+                    currentplayer = _player1;
+                }
+                if(remainingRounds == 0)
+                {
+                    Console.WriteLine("Do you want to play more rounds ? (n or y)");
+                    if(Console.ReadLine() == "y")
+                    {
+                        Console.WriteLine("How many rounds ?");
+                        remainingRounds = Convert.ToInt32(Console.ReadLine());
+                    }
+                }
+            }
+            Console.WriteLine("The game has come to an end. Let's found out who won !");
+            Console.WriteLine("Here is a short recap : \n"+_player1.toString()+"\n"+_player2.toString());
+
+            if (_player1.Score > _player2.Score)
+            {
+                Console.WriteLine("The winner is : "+_player1.Name);
+            }
+            else if (_player1.Score < _player2.Score)
+            {
+                Console.WriteLine("The winner is : "+_player2.Name);
+            }
+            else
+            {
+                Console.WriteLine("This game ends on a tie !");
+            }
         }
 
-        public void NextTurn(){
-            
+        public void Turn(Player player){
+            _board.PrintBoard();
+            Console.WriteLine("Enter the words you found :");
+            while(_clock.GetTimeRemaining() != 0)
+            {
+                string word = Console.ReadLine();
+                if (_board.checkValidWord(word))
+                {
+                    player.Gain(word);
+                    Console.WriteLine(string.Format("You have scored {0} with {1}.",player.LastGain, word));
+                }
+                else{
+                    Console.WriteLine(word + "is not valid.");
+                }
+            }
         }
 
         public void CheckWin(){}

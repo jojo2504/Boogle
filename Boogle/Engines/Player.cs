@@ -2,16 +2,50 @@ namespace Boogle.Engines{
     class Player{
         string _name;
         int _score = 0;
+        int _lastGain = 0;
+        Dictionary<char,int> _letterPoints = InitializeLetterPoints();
         Dictionary<string, int> _wordsFound = new Dictionary<string, int>();
 
         public Player(string _name)
         {
             this._name = _name;
         }
-
-        public void Gain(int points)
+        private static Dictionary<char,int> InitializeLetterPoints()
         {
-            _score += points;
+            Dictionary<char, int> letterPoints = new Dictionary<char, int>();
+
+            string filePath = Path.Combine("..", "Boogle", "Utils", "letters");
+            try
+            {
+                // Create a StreamReader
+                using (StreamReader streamReader = new StreamReader(Path.Combine(filePath))){
+                    string line;
+                    while ((line = streamReader.ReadLine()) != null)
+                    {
+                        string[] parts = line.Split(';');
+                        if (parts.Length == 3 &&
+                            char.TryParse(parts[0], out char letter) &&
+                            int.TryParse(parts[1], out int points))
+                        {
+                            letterPoints[letter] = points;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex){
+                Console.WriteLine(ex.Message);
+            }
+            return letterPoints;
+        }
+
+        public void Gain(string word)
+        {
+            _lastGain = 0;
+            foreach (char letter in word)
+            {
+                _score += _letterPoints[letter];
+                _lastGain += _letterPoints[letter];  
+            }
         }
 
         public bool Contain(string mot)
@@ -41,10 +75,10 @@ namespace Boogle.Engines{
 
         public string toString()
         {
-            string descriptionPlayer = string.Format("{0} a {1} points et a trouvé les mots suivants :\n", _name, _score);
+            string descriptionPlayer = string.Format("{0} has {1} points and has found those words :\n", _name, _score);
             foreach (KeyValuePair<string,int> kvp in _wordsFound)
             {
-                descriptionPlayer += string.Format("{0}, {1} fois",kvp.Key,kvp.Value);
+                descriptionPlayer += string.Format("{0}, {1} time",kvp.Key,kvp.Value);
             }
             return descriptionPlayer;
         }
@@ -56,6 +90,10 @@ namespace Boogle.Engines{
         public int Score
         {
             get {return _score;}
+        }
+        public int LastGain
+        {
+            get {return _lastGain;}
         }
         public Dictionary<string, int> WordsFound
         {
