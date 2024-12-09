@@ -1,9 +1,9 @@
 using KaimiraGames;
+using directoryPath;
 
 namespace Boogle.Engines{
     class Dice{
         readonly WeightedList<char> _weightedList = InitializeWeight();
-
         readonly Random _random = new Random();
         char[] _faces;
         int _currentIndexFace;
@@ -16,7 +16,7 @@ namespace Boogle.Engines{
         private static WeightedList<char> InitializeWeight(){
             WeightedList<char> weightedList = new();
             
-            string filePath = Path.Combine("..", "Boogle", "Utils", "letters");
+            string filePath = Path.Combine(DirectoryPath.GetSolutionRoot(), "Utils", "letters");
             try
             {
                 // Create a StreamReader

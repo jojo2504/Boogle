@@ -16,21 +16,35 @@ static class Program
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
         //Application.Run(new Form1());
-        Stopwatch stopwatch = new Stopwatch();
-        char[,] board = new char[,]
-        {
-            { 'E', 'N', 'I', 'A' },
-            { 'O', 'L', 'T', 'S' },
-            { 'D', 'R', 'E', 'D' },
-            { 'N', 'E', 'E', 'O' }
+        Game game = new Game(3, 3, ["en","fr"]);
+        char[,] testBoard = new char[3,3] {
+            {'J', 'I', 'R'},
+            {'J', 'I', 'R'},
+            {'Q', 'D', 'A'},
         };
-        Game game = new Game(50, 50, ["fr","en"]);
-        stopwatch.Start();
-        game.Board.getAllValidWordsOnBoard(game.Board.Dictionary.Root);
-        stopwatch.Stop();
-        Console.WriteLine(stopwatch.ElapsedMilliseconds);
+        Console.WriteLine("{0}", game.Board.Dictionary.WordList.Count);
+        SortedList<string, string> actual = game.Ai.Play(testBoard);
+        SortedList<string, string> expected = new SortedList<string, string>
+        {
+            { "AI", "AI" },
+            { "AIR", "AIR" },
+            { "DA", "DA" },
+            { "DIA", "DIA" },
+            { "DIRA", "DIRA" },
+            { "IRA", "IRA" },
+            { "IRAI", "IRAI" },
+            { "RA", "RA" },
+            { "RAD", "RAD" },
+            { "RAI", "RAI" },
+            { "RAID", "RAID" },
+            { "RI", "RI" },
+            { "RIA", "RIA" },
+            { "RIDA", "RIDA" },
+            { "RIRA", "RIRA" },
+            { "RIRAI", "RIRAI" }
+        };
 
-        //Console.WriteLine(game.Dictionary.RechDichoRecursif("DE"));
+        Console.WriteLine(string.Join("\n", actual.ToArray()));
     }       
 
     /// <summary>

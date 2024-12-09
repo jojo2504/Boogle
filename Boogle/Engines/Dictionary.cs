@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
+using directoryPath;
 
 namespace Boogle.Engines
 {
@@ -12,14 +10,13 @@ namespace Boogle.Engines
         public Dictionary(List<string> languageIDs){
             string filePath;
             foreach (string languageID in languageIDs){
-                Console.WriteLine("" + languageID);
                 if (languageID == "en"){
-                    filePath = Path.Combine("..", "Boogle", "Utils", "english_dictionary");
+                    filePath = Path.Combine(DirectoryPath.GetSolutionRoot(), "Utils", "english_dictionary");
                     filePath = Path.GetFullPath(filePath);
                     InitWords(filePath);
                 }
                 if (languageID == "fr"){
-                    filePath = Path.Combine("..", "Boogle", "Utils", "french_dictionary");
+                    filePath = Path.Combine(DirectoryPath.GetSolutionRoot(), "Utils", "french_dictionary");
                     filePath = Path.GetFullPath(filePath);
                     InitWords(filePath);
                 }
@@ -104,5 +101,6 @@ namespace Boogle.Engines
             return Helper(word, left, right);
         } 
         public TrieNode Root => _root;
+        public List<string> WordList => _wordList;
     }
 }

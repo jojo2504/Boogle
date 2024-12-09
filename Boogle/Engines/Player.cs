@@ -56,6 +56,7 @@ namespace Boogle.Engines{
         public int Score
         {
             get {return _score;}
+            set {_score = value;}
         }
         public Dictionary<string, int> WordsFound
         {
