@@ -55,8 +55,8 @@ namespace Boogle.Engines
         /// <summary>
         /// Console Debugging Purpose
         /// </summary>
-        public string PrintBoard()
-        {   
+
+        public override string ToString(){
             int index = 0;
             string chainDescribeBoard = "";
             foreach (Dice dice in _board)
@@ -68,7 +68,7 @@ namespace Boogle.Engines
                     chainDescribeBoard += "\n";
                 }
             }
-            return chainDescribeBoard;          
+            return chainDescribeBoard;    
         }
 
         public string toString()

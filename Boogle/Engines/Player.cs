@@ -2,16 +2,12 @@ namespace Boogle.Engines{
     class Player{
         string _name;
         int _score = 0;
+        
         Dictionary<string, int> _wordsFound = new Dictionary<string, int>();
 
         public Player(string _name)
         {
             this._name = _name;
-        }
-
-        public void Gain(int points)
-        {
-            _score += points;
         }
 
         public bool Contain(string mot)
@@ -41,10 +37,10 @@ namespace Boogle.Engines{
 
         public string toString()
         {
-            string descriptionPlayer = string.Format("{0} a {1} points et a trouvé les mots suivants :\n", _name, _score);
+            string descriptionPlayer = string.Format("{0} has {1} points and has found those words :\n", _name, _score);
             foreach (KeyValuePair<string,int> kvp in _wordsFound)
             {
-                descriptionPlayer += string.Format("{0}, {1} fois",kvp.Key,kvp.Value);
+                descriptionPlayer += string.Format("{0}, {1} time",kvp.Key,kvp.Value);
             }
             return descriptionPlayer;
         }

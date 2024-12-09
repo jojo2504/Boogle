@@ -16,35 +16,8 @@ static class Program
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
         //Application.Run(new Form1());
-        Game game = new Game(3, 3, ["en","fr"]);
-        char[,] testBoard = new char[3,3] {
-            {'J', 'I', 'R'},
-            {'J', 'I', 'R'},
-            {'Q', 'D', 'A'},
-        };
-        Console.WriteLine("{0}", game.Board.Dictionary.WordList.Count);
-        SortedList<string, string> actual = game.Ai.Play(testBoard);
-        SortedList<string, string> expected = new SortedList<string, string>
-        {
-            { "AI", "AI" },
-            { "AIR", "AIR" },
-            { "DA", "DA" },
-            { "DIA", "DIA" },
-            { "DIRA", "DIRA" },
-            { "IRA", "IRA" },
-            { "IRAI", "IRAI" },
-            { "RA", "RA" },
-            { "RAD", "RAD" },
-            { "RAI", "RAI" },
-            { "RAID", "RAID" },
-            { "RI", "RI" },
-            { "RIA", "RIA" },
-            { "RIDA", "RIDA" },
-            { "RIRA", "RIRA" },
-            { "RIRAI", "RIRAI" }
-        };
-
-        Console.WriteLine(string.Join("\n", actual.ToArray()));
+        Game game = Game.InitGame();
+        game.Start();
     }       
 
     /// <summary>

@@ -72,23 +72,23 @@ public class TestClass{
     }
 
     [Fact]
-    public void Test_AddPoint_banane(){
-        Assert.Equal(8, game.AddPoint("BANANE"));
+    public void Test_CalculatePoints_banane(){
+        Assert.Equal(8, game.CalculatePoints("BANANE"));
     }
 
     [Fact]
-    public void Test_AddPoint_null(){
-        Assert.Equal(0, game.AddPoint(""));
+    public void Test_CalculatePoints_null(){
+        Assert.Equal(0, game.CalculatePoints(""));
     }
 
     [Fact]
-    public void Test_AddPoint_xzy(){
-        Assert.Equal(30, game.AddPoint("XYZ"));
+    public void Test_CalculatePoints_xzy(){
+        Assert.Equal(30, game.CalculatePoints("XYZ"));
     }
 
     [Fact]
-    public void Test_AddPoint_NeedToUpper(){
-        int result = game.AddPoint("xyz");
+    public void Test_CalculatePoints_NeedToUpper(){
+        int result = game.CalculatePoints("xyz");
         if (result != 30){
             Logger.WriteLine("Need to Upper each caracter in inputted word");
         }
@@ -96,11 +96,20 @@ public class TestClass{
     }
 
     [Fact]
-    public void Test_CheckWinner(){
+    public void Test_ProcessWinner(){
         Player player1 = new Player("");
         Player player2 = new Player("");
         player1.Score = 5;
         player2.Score = 6;
-        Assert.Equal(player2, game.CheckWinner(player1, player2));
+        Assert.Equal($"The winner is: {player2.Name}", game.ProcessWinner(player1, player2));
+    }
+
+    [Fact]
+    public void Test_ProcessWinner_Tie(){
+        Player player1 = new Player("");
+        Player player2 = new Player("");
+        player1.Score = 5;
+        player2.Score = 5;
+        Assert.Equal("It's a tie!", game.ProcessWinner(player1, player2));
     }
 }
