@@ -16,21 +16,8 @@ static class Program
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
         //Application.Run(new Form1());
-        Stopwatch stopwatch = new Stopwatch();
-        char[,] board = new char[,]
-        {
-            { 'E', 'N', 'I', 'A' },
-            { 'O', 'L', 'T', 'S' },
-            { 'D', 'R', 'E', 'D' },
-            { 'N', 'E', 'E', 'O' }
-        };
-        Game game = new Game(50, 50, ["fr","en"]);
-        stopwatch.Start();
-        game.Board.getAllValidWordsOnBoard(game.Board.Dictionary.Root);
-        stopwatch.Stop();
-        Console.WriteLine(stopwatch.ElapsedMilliseconds);
-
-        //Console.WriteLine(game.Dictionary.RechDichoRecursif("DE"));
+        Game game = Game.InitGame();
+        game.Start();
     }       
 
     /// <summary>
