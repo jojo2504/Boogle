@@ -8,7 +8,6 @@ public class TestClass{
     private readonly Game game2 = new Game(["en"]);
     private readonly Game game3 = new Game(["fr", "en"]);
 
-    
     public TestClass(ITestOutputHelper output)
     {
         Logger = output;

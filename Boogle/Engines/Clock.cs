@@ -6,11 +6,13 @@ namespace Boogle.Engines
     {
         private System.Threading.Timer _timer;
         private int _remainingTimeInSeconds;
+        private int _seconds;
         private bool _isRunning;
         
-        public Clock()
+        public Clock(int seconds)
         {
-            _remainingTimeInSeconds = 60; // 1 minute in seconds
+            _seconds = seconds;
+            _remainingTimeInSeconds = seconds;
             _isRunning = false;
         }
         
@@ -26,7 +28,7 @@ namespace Boogle.Engines
         
         public void Reset()
         {
-            _remainingTimeInSeconds = 60; // Reset to 1 minute
+            _remainingTimeInSeconds = _seconds; // Reset to 1 minute
             Console.WriteLine("Countdown clock reset to 1 minute.");
         }
         

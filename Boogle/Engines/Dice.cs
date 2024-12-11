@@ -1,5 +1,6 @@
 using KaimiraGames;
 using directoryPath;
+using System.IO;
 
 namespace Boogle.Engines{
     class Dice{

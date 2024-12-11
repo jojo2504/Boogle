@@ -1,3 +1,4 @@
+using System.IO;
 using directoryPath;
 
 namespace Boogle.Engines
@@ -13,16 +14,16 @@ namespace Boogle.Engines
         Dictionary<char,int> _letterPoints = InitializeLetterPoints();
 
         //primary constructor
-        public Game(Board board, List<string> languages){
+        public Game(Board board, List<string> languages, int seconds = 60){
             _board = board;
             _board.Dictionary = new Dictionary(languages);
-            _clock = new Clock();
+            _clock = new Clock(seconds);
             _ai = new AI(_board);
             _languages = languages;
         }
         
-        public Game(int boardWidth, int boardHeight, List<string> languages)
-            : this(new Board(boardWidth, boardHeight), languages) // Calls the primary constructor after creating new board
+        public Game(int boardWidth, int boardHeight, List<string> languages, int seconds = 60)
+            : this(new Board(boardWidth, boardHeight), languages, seconds) // Calls the primary constructor after creating new board
         {
         }
 
@@ -41,7 +42,7 @@ namespace Boogle.Engines
             Console.WriteLine("Hello, welcome to the Boogle game :\n\nEnter the name of player 1 :");
             Player player1 = new Player(Console.ReadLine());
             Console.WriteLine("Enter the name of player 2 :");
-            Player _player2 = new Player(Console.ReadLine());
+            Player player2 = new Player(Console.ReadLine());
 
             Console.WriteLine("Select the language you want to play with (en or fr):");
             do {
@@ -54,7 +55,7 @@ namespace Boogle.Engines
 
             Game game = new Game(languages);
             game._player1 = player1;
-            game._player2 = player1;
+            game._player2 = player2;
 
             return game;
         }
@@ -162,6 +163,8 @@ namespace Boogle.Engines
         }
 
         public AI Ai => _ai;
+        public Player Player1 { get; internal set; }
+        public Player Player2 { get; internal set; }
         public List<string> Languages => _languages;
     }
 }
