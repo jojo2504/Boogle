@@ -2,7 +2,7 @@ using System;
 
 namespace Boogle.Engines
 {
-    internal class Board
+    public class Board
     {
         int _boardWidth;
         int _boardHeight;
@@ -50,6 +50,7 @@ namespace Boogle.Engines
                 }
             }
             _graph.SetMatrix(_matrix);
+            _validWords = getAllValidWordsOnBoard(_dictionary.Root);
         }
 
         /// <summary>
@@ -157,6 +158,7 @@ namespace Boogle.Engines
 
         public int BoardWidth => _boardWidth;
         public int BoardHeight => _boardHeight;
+        
         public Dice this[int x, int y] => _board[x,y];
         public Dictionary Dictionary{
             set { 

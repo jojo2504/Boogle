@@ -1,7 +1,9 @@
 namespace Boogle.Engines{
-    class Player{
+    public class Player{
         string _name;
         int _score = 0;
+
+        Clock _clock;
         
         Dictionary<string, int> _wordsFound = new Dictionary<string, int>();
 
@@ -58,5 +60,7 @@ namespace Boogle.Engines{
         {
             get {return _wordsFound;}
         }
+
+        public Clock Clock { get; internal set; }
     }
 }

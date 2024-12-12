@@ -3,36 +3,32 @@ using directoryPath;
 
 namespace Boogle.Engines
 {
-    internal class Game
+    public class Game
     {
         Board _board;
         public List<string> _languages = [];
         Player _player1;
         Player? _player2;
-        Clock _clock;
+        Player _currentPlayer;
         AI _ai;
-        Dictionary<char,int> _letterPoints = InitializeLetterPoints();
+        int _roundRemaining;
+        static Dictionary<char,int> _letterPoints = InitializeLetterPoints();
 
         //primary constructor
-        public Game(Board board, List<string> languages, int seconds = 60){
+        public Game(Board board, List<string> languages){
             _board = board;
             _board.Dictionary = new Dictionary(languages);
-            _clock = new Clock(seconds);
             _ai = new AI(_board);
             _languages = languages;
         }
         
-        public Game(int boardWidth, int boardHeight, List<string> languages, int seconds = 60)
-            : this(new Board(boardWidth, boardHeight), languages, seconds) // Calls the primary constructor after creating new board
+        public Game(int boardWidth, int boardHeight, List<string> languages)
+            : this(new Board(boardWidth, boardHeight), languages) // Calls the primary constructor after creating new board
         {
         }
 
         public Game(List<string> languages): this(new Board(), languages) // Constructor if nothing is specified except languages
         {
-        }
-
-        public void StartClock(){
-            _clock.Start();
         }
 
         public static Game InitGame(){
@@ -66,7 +62,7 @@ namespace Boogle.Engines
             Player currentplayer = _player1;
             while(remainingRounds != 0) 
             {
-                Turn(currentplayer);
+                ChangeTurn();
                 remainingRounds--;
                 if (currentplayer == _player1){
                     currentplayer = _player2;
@@ -89,25 +85,16 @@ namespace Boogle.Engines
             Console.WriteLine(ProcessWinner(_player1, _player2));
         }
 
-        public void Turn(Player player){
-            Console.WriteLine(_board);
-            Console.WriteLine("Enter the words you found :");
-            while(_clock.GetTimeRemaining() != 0)
-            {
-                string word = Console.ReadLine();
-                if (_board.checkValidWord(word.ToUpper()))
-                {
-                    int lastGain = CalculatePoints(word);
-                    player.Score += lastGain;
-                    Console.WriteLine(string.Format("You have scored {0} with {1}.", lastGain, word));
-                }
-                else {
-                    Console.WriteLine("{0} is not valid.", word);
-                }
+        public void ChangeTurn(){
+            if (_currentPlayer == _player1){
+                _currentPlayer = _player2;
+            }
+            else if (_currentPlayer == _player2){
+                _currentPlayer = _player1;
             }
         }
 
-        public int CalculatePoints(string word){
+        public static int CalculatePoints(string word){
             int currentWordGain = 0;
             foreach (char letter in word){
                 currentWordGain += _letterPoints[char.ToUpper(letter)];
@@ -154,17 +141,12 @@ namespace Boogle.Engines
         }
 
 
-        public Board Board{
-            get{return _board;}
-        }
-
-        public Clock Clock{
-            get{return _clock;}
-        }
-
-        public AI Ai => _ai;
+        public Board Board => _board;
+        public AI Ai { get; internal set; }
         public Player Player1 { get; internal set; }
         public Player Player2 { get; internal set; }
+        public int RoundRemaining { get; internal set; }
+        public Player CurrentPlayer { get; internal set; }
         public List<string> Languages => _languages;
     }
 }
