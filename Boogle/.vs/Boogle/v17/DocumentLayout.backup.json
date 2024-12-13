@@ -1,0 +1,104 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Jojo\\Documents\\Boogle\\Boogle\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{34654B51-EED2-42E0-91CA-B41B0CDC042E}|Boogle.csproj|c:\\users\\jojo\\documents\\boogle\\boogle\\gamepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34654B51-EED2-42E0-91CA-B41B0CDC042E}|Boogle.csproj|solutionrelative:gamepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{34654B51-EED2-42E0-91CA-B41B0CDC042E}|Boogle.csproj|c:\\users\\jojo\\documents\\boogle\\boogle\\menupage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34654B51-EED2-42E0-91CA-B41B0CDC042E}|Boogle.csproj|solutionrelative:menupage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{34654B51-EED2-42E0-91CA-B41B0CDC042E}|Boogle.csproj|c:\\users\\jojo\\documents\\boogle\\boogle\\engines\\clock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34654B51-EED2-42E0-91CA-B41B0CDC042E}|Boogle.csproj|solutionrelative:engines\\clock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{34654B51-EED2-42E0-91CA-B41B0CDC042E}|Boogle.csproj|c:\\users\\jojo\\documents\\boogle\\boogle\\engines\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34654B51-EED2-42E0-91CA-B41B0CDC042E}|Boogle.csproj|solutionrelative:engines\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{34654B51-EED2-42E0-91CA-B41B0CDC042E}|Boogle.csproj|c:\\users\\jojo\\documents\\boogle\\boogle\\gamepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{34654B51-EED2-42E0-91CA-B41B0CDC042E}|Boogle.csproj|solutionrelative:gamepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MenuPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Jojo\\Documents\\Boogle\\Boogle\\MenuPage.xaml.cs",
+              "RelativeDocumentMoniker": "MenuPage.xaml.cs",
+              "ToolTip": "C:\\Users\\Jojo\\Documents\\Boogle\\Boogle\\MenuPage.xaml.cs",
+              "RelativeToolTip": "MenuPage.xaml.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAkwCQAAACTAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-13T16:48:51.225Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GamePage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Jojo\\Documents\\Boogle\\Boogle\\GamePage.xaml.cs",
+              "RelativeDocumentMoniker": "GamePage.xaml.cs",
+              "ToolTip": "C:\\Users\\Jojo\\Documents\\Boogle\\Boogle\\GamePage.xaml.cs",
+              "RelativeToolTip": "GamePage.xaml.cs",
+              "ViewState": "AgIAAHMAAAAAAAAAAAAowH4AAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-13T16:34:07.548Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Player.cs",
+              "DocumentMoniker": "C:\\Users\\Jojo\\Documents\\Boogle\\Boogle\\Engines\\Player.cs",
+              "RelativeDocumentMoniker": "Engines\\Player.cs",
+              "ToolTip": "C:\\Users\\Jojo\\Documents\\Boogle\\Boogle\\Engines\\Player.cs",
+              "RelativeToolTip": "Engines\\Player.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-13T16:33:52.442Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Clock.cs",
+              "DocumentMoniker": "C:\\Users\\Jojo\\Documents\\Boogle\\Boogle\\Engines\\Clock.cs",
+              "RelativeDocumentMoniker": "Engines\\Clock.cs",
+              "ToolTip": "C:\\Users\\Jojo\\Documents\\Boogle\\Boogle\\Engines\\Clock.cs",
+              "RelativeToolTip": "Engines\\Clock.cs",
+              "ViewState": "AgIAADAAAAAAAAAAAAAswEgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-13T16:31:14.132Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GamePage.xaml",
+              "DocumentMoniker": "C:\\Users\\Jojo\\Documents\\Boogle\\Boogle\\GamePage.xaml",
+              "RelativeDocumentMoniker": "GamePage.xaml",
+              "ToolTip": "C:\\Users\\Jojo\\Documents\\Boogle\\Boogle\\GamePage.xaml",
+              "RelativeToolTip": "GamePage.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-12-13T16:26:41.313Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

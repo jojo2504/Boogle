@@ -7,6 +7,8 @@ namespace Boogle.Engines{
         
         Dictionary<string, int> _wordsFound = new Dictionary<string, int>();
 
+        List<string> _wordsPlayedTurn = new();
+
         public Player(string _name)
         {
             this._name = _name;
@@ -35,6 +37,14 @@ namespace Boogle.Engines{
             {
                 _wordsFound.Add(mot,1);
             }
+
+            if (!_wordsPlayedTurn.Contains(mot)){
+                _wordsPlayedTurn.Add(mot);
+            }
+        }
+
+        public void WordsReset(){
+            _wordsPlayedTurn.Clear();
         }
 
         public string toString()

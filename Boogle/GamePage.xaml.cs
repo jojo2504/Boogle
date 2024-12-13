@@ -70,6 +70,7 @@ namespace Boogle
             string word = WordInputTextBox.Text.Trim().ToUpper();
             if (_game.Board.checkValidWord(word))
             {
+                _game.CurrentPlayer.Add_Word(word);
                 int lastGain = Game.CalculatePoints(word);
                 _game.CurrentPlayer.Score += lastGain;
                 if (_game.CurrentPlayer == _game.Player1)
@@ -93,7 +94,7 @@ namespace Boogle
         private void EndTurnButton_Click(object sender, RoutedEventArgs e)
         {
             WordInputTextBox.Clear();
-            if (_game.CurrentPlayer == _game.Player1)
+            if (_game.CurrentPlayer == _game.Player2 || _player2IsAI)
             {
                 _game.RoundRemaining--;
                 RoundsRemainingTextBlock.Text = $"Rounds Remaining: {_game.RoundRemaining}";
@@ -126,6 +127,7 @@ namespace Boogle
         private void ChangeTurn()
         {
             _game.CurrentPlayer.Clock.Stop();
+            _game.CurrentPlayer.Clock.Reset();
             if (_game.CurrentPlayer == _game.Player1)
             {
                 _game.CurrentPlayer = _game.Player2;
@@ -247,8 +249,20 @@ namespace Boogle
                 {
                     Player2TimerTextBlock.Text = $"Time: {_game.Player2.Clock.GetFormattedTime()}";
                 }
+
+                // Check if Player 1's timer has reached 0
+                if (_game.CurrentPlayer.Clock.GetTimeRemaining() == 0)
+                {
+                    SimulateEndTurn();
+                }
             };
             _uiTimer.Start();
+        }
+
+        private void SimulateEndTurn()
+        {
+            // Simulate pressing the End Turn button
+            EndTurnButton_Click(EndTurnButton, new RoutedEventArgs());
         }
 
         // Methods to update points for each player
