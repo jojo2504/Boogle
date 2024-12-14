@@ -9,24 +9,24 @@
 - [Usage](https://github.com/jojo2504/Boogle?tab=readme-ov-file#usage)
 - [Implementation Details](https://github.com/jojo2504/Boogle?tab=readme-ov-file#implementation-details)
 - [Path of work](https://github.com/jojo2504/Boogle?tab=readme-ov-file#path-of-work)
-- [Known Bugs](https://github.com/jojo2504/Boogle?tab=readme-ov-file#known-bugs)
+- [Conclusion](https://github.com/jojo2504/Boogle?tab=readme-ov-file#conlusion)
 
 ## Introduction
 This project explores the design and implementation of a dynamic word game inspired by the popular Boggle game. Our work encompasses a range of tasks, including developing an algorithm to generate a randomized letter grid, implementing efficient word search mechanisms, and ensuring valid word identification using a comprehensive dictionary. We have also focused on creating an engaging user interface, optimizing gameplay mechanics for fairness and fun, and enabling multiplayer functionality for competitive play. Additionally, we analyzed scoring systems, incorporated a timer for added challenge, and tested the application for reliability and usability. This project demonstrates a blend of programming, algorithm design, and user-centric development, offering insights into building interactive games.
 ### This repository is a project for A2/S3 students in computer sciences.
 
 ## Features (TODO)
-- Customizable game settings, including the size of the game board and the duration of the game.
-- Calculates the score of each word based on the point values of the letters and the length of the word.
-- Implement the game logic.
 - Displays the final scores and the winner.
-- Generates a word cloud for each player's found words.
-- Usable user interface to play the game.
 
 ## Features (DONE)
 - Supports multiple languages (French and English by default).
 - Maintains a list of words found by each player.
 - Implement algorithm to find every possible playable words on the current board formed by the dices.
+- Generates a word cloud for each player's found words.
+- Usable user interface to play the game.
+- Customizable game settings, including the size of the game board and the duration of the game.
+- Calculates the score of each word based on the point values of the letters and the length of the word.
+- Implement the game logic.
 
 ## Getting Started (For Custom Building)
 1. Clone the repository to your local machine with `git clone --recurse-submodules <repository-url>`
