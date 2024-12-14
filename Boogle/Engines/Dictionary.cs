@@ -1,3 +1,4 @@
+using System.IO;
 using directoryPath;
 
 namespace Boogle.Engines
@@ -100,7 +101,7 @@ namespace Boogle.Engines
             }
             return Helper(word, left, right);
         } 
-        public TrieNode Root => _root;
         public List<string> WordList => _wordList;
+        public TrieNode Root => _root;
     }
 }

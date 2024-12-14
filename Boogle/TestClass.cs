@@ -8,7 +8,6 @@ public class TestClass{
     private readonly Game game2 = new Game(["en"]);
     private readonly Game game3 = new Game(["fr", "en"]);
 
-    
     public TestClass(ITestOutputHelper output)
     {
         Logger = output;
@@ -68,27 +67,71 @@ public class TestClass{
             { "RIRA", "RIRA" },
             { "RIRAI", "RIRAI" }
         };
+        game.Ai = new AI(game.Board);
         Assert.Equal(expected, game.Ai.Play(testBoard));
+    }
+    
+    [Fact]
+    public void Test_AI2(){
+        char[,] testBoard = new char[3,3] {
+            {'J', 'I', 'R'},
+            {'J', 'I', 'R'},
+            {'Q', 'D', 'A'},
+        };
+        SortedList<string, string> expected = new SortedList<string, string>
+        {
+            { "AI", "AI" },
+            { "AIR", "AIR" },
+            { "DA", "DA" },
+            { "DIA", "DIA" },
+            { "DIRA", "DIRA" },
+            { "IRA", "IRA" },
+            { "IRAI", "IRAI" },
+            { "RA", "RA" },
+            { "RAD", "RAD" },
+            { "RAI", "RAI" },
+            { "RAID", "RAID" },
+            { "RI", "RI" },
+            { "RIA", "RIA" },
+            { "RIDA", "RIDA" },
+            { "RIRA", "RIRA" },
+            { "RIRAI", "RIRAI" }
+        };
+        int sum = 0;
+        foreach(string word in expected.Keys){
+            sum += Game.CalculatePoints(word);
+        }
+        Assert.Equal(57, sum);
+    }
+
+    [Fact]
+    public void Test_DFS(){
+        char[,] testBoard = new char[3,3] {
+            {'T', 'E', 'Z'},
+            {'T', 'E', 'U'},
+            {'I', 'D', 'A'},
+        };
+        Logger.WriteLine(string.Join(' ', game.Board.getAllValidWordsOnBoard(game.Board.Dictionary.Root, testBoard).Keys));
     }
 
     [Fact]
     public void Test_CalculatePoints_banane(){
-        Assert.Equal(8, game.CalculatePoints("BANANE"));
+        Assert.Equal(8, Game.CalculatePoints("BANANE"));
     }
 
     [Fact]
     public void Test_CalculatePoints_null(){
-        Assert.Equal(0, game.CalculatePoints(""));
+        Assert.Equal(0, Game.CalculatePoints(""));
     }
 
     [Fact]
     public void Test_CalculatePoints_xzy(){
-        Assert.Equal(30, game.CalculatePoints("XYZ"));
+        Assert.Equal(30, Game.CalculatePoints("XYZ"));
     }
 
     [Fact]
     public void Test_CalculatePoints_NeedToUpper(){
-        int result = game.CalculatePoints("xyz");
+        int result = Game.CalculatePoints("xyz");
         if (result != 30){
             Logger.WriteLine("Need to Upper each caracter in inputted word");
         }

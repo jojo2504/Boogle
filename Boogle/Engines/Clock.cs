@@ -6,11 +6,13 @@ namespace Boogle.Engines
     {
         private System.Threading.Timer _timer;
         private int _remainingTimeInSeconds;
+        private int _seconds;
         private bool _isRunning;
         
-        public Clock()
+        public Clock(int seconds)
         {
-            _remainingTimeInSeconds = 60; // 1 minute in seconds
+            _seconds = seconds;
+            _remainingTimeInSeconds = seconds;
             _isRunning = false;
         }
         
@@ -26,8 +28,8 @@ namespace Boogle.Engines
         
         public void Reset()
         {
-            _remainingTimeInSeconds = 60; // Reset to 1 minute
-            Console.WriteLine("Countdown clock reset to 1 minute.");
+            _remainingTimeInSeconds = _seconds; // Reset to 1 minute
+            //Console.WriteLine("Countdown clock reset to 1 minute.");
         }
         
         private void UpdateClock(object state)
@@ -35,13 +37,13 @@ namespace Boogle.Engines
             if (_remainingTimeInSeconds > 0)
             {
                 Console.Clear();
-                Console.WriteLine("Time Remaining: " + TimeSpan.FromSeconds(_remainingTimeInSeconds).ToString("mm\\:ss"));
+                //Console.WriteLine("Time Remaining: " + TimeSpan.FromSeconds(_remainingTimeInSeconds).ToString("mm\\:ss"));
                 _remainingTimeInSeconds--;
             }
             else
             {
                 Console.Clear();
-                Console.WriteLine("Time's up!");
+                //Console.WriteLine("Time's up!");
                 Stop(); // Stop the timer when it reaches zero
             }
         }
@@ -60,5 +62,12 @@ namespace Boogle.Engines
         public int GetTimeRemaining(){
             return _remainingTimeInSeconds;
         }
+
+        public string GetFormattedTime()
+    {
+        int minutes = _remainingTimeInSeconds / 60;
+        int seconds = _remainingTimeInSeconds % 60;
+        return $"{minutes:D2}:{seconds:D2}";
+    }
     }
 }
