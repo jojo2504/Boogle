@@ -91,8 +91,7 @@ namespace Boogle.Engines
             WordCloudGenerator.SaveWordCloud(player1Cloud, "word_cloud_player1.png");
 
             Bitmap player2Cloud = WordCloudGenerator.CreateWordCloud(_player2.WordsFound);
-            WordCloudGenerator.SaveWordCloud(player1Cloud, "word_cloud_player2.png");
-
+            WordCloudGenerator.SaveWordCloud(player2Cloud, "word_cloud_player2.png");
         }
 
         public void Turn(Player player){
