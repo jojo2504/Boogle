@@ -43,8 +43,7 @@ This project explores the design and implementation of a dynamic word game inspi
 5. Enjoy
    
 ## Implementation Details
-1. For the User Interface, the solution will be a **Winform**.
-   
+1. For the User Interface, the solution will be a **Windows Application WPF**.
 ![UML class model](/markdownassets/UML-class-model.png)
 
 ## Path of work
