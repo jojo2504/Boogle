@@ -159,32 +159,9 @@ namespace Boogle.Engines{
             bitmap.Save(filePath);
         }
     }
-
     // Usage example
-    class Program
-    {
-        static void Main()
-        {
-            // Example word occurrences dictionary
-            var wordOccurrences = new Dictionary<string, int>
-            {
-                {"Programming", 150},
-                {"C#", 120},
-                {"Development", 100},
-                {"Artificial Intelligence", 80},
-                {"Cloud", 70},
-                {"Word Cloud", 60},
-                {"Interface", 50},
-                {"Algorithm", 40},
-                {"Data", 30},
-                {"Machine Learning", 20}
-            };
-
-            // Generate word cloud
-            Bitmap cloud = WordCloudGenerator.CreateWordCloud(wordOccurrences);
-            
-            // Save the image
-            WordCloudGenerator.SaveWordCloud(cloud, "word_cloud.png");
-        }
-    }
+    // Generate word cloud
+    //Bitmap cloud = WordCloudGenerator.CreateWordCloud(wordOccurrences);          
+    // Save the image
+    //WordCloudGenerator.SaveWordCloud(cloud, "word_cloud.png");
 }
