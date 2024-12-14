@@ -1,7 +1,9 @@
 .idea
 .vs
 
+
 Boogle/bin
 Boogle/obj
+Boogle/assets
 
 Boogle.sln.DotSettings.user
