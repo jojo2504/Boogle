@@ -72,5 +72,7 @@ namespace Boogle.Engines{
         }
 
         public Clock Clock { get; internal set; }
+
+        public List<string> WordsPlayedTurn => _wordsPlayedTurn;
     }
 }

@@ -1,5 +1,6 @@
 using System.IO;
 using directoryPath;
+using System.Drawing;
 
 namespace Boogle.Engines
 {
@@ -83,6 +84,12 @@ namespace Boogle.Engines
             Console.WriteLine("The game has come to an end. Let's found out who won !");
             Console.WriteLine("Here is a short recap : \n"+_player1.toString()+"\n"+_player2.toString());
             Console.WriteLine(ProcessWinner(_player1, _player2));
+
+            Bitmap player1Cloud = WordCloudGenerator.CreateWordCloud(_player1.WordsFound);
+            WordCloudGenerator.SaveWordCloud(player1Cloud, "word_cloud_player1.png");
+
+            Bitmap player2Cloud = WordCloudGenerator.CreateWordCloud(_player2.WordsFound);
+            WordCloudGenerator.SaveWordCloud(player2Cloud, "word_cloud_player2.png");
         }
 
         public void ChangeTurn(){

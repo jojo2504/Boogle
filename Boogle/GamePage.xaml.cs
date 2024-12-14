@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Drawing;
 using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml.Linq;
 using Boogle.Engines;
+using directoryPath;
 
 namespace Boogle
 {
@@ -30,11 +33,11 @@ namespace Boogle
 
             Player player1 = new Player(player1Name);
             _game.Player1 = player1;
-            _game.Player1.Clock = new Clock(seconds);
+            _game.Player1.Clock = new Engines.Clock(seconds);
             Player1NameTextBlock.Text = player1.Name;
             Player1TimerTextBlock.Text = $"Time: {seconds}";
 
-            if (player2IsAI ) {
+            if (player2IsAI) {
                 AI player2 = new AI(_game.Board);
                 _game.Ai = player2;
                 Player2NameTextBlock.Text = "AI";
@@ -44,7 +47,7 @@ namespace Boogle
                 Player player2 = new Player(player2Name);
                 _game.Player2 = player2;
                 Player2NameTextBlock.Text = player2.Name;
-                _game.Player2.Clock = new Clock(seconds);
+                _game.Player2.Clock = new Engines.Clock(seconds);
                 Player2TimerTextBlock.Text = $"Time: {seconds}";
             }
             CurrentPlayerTurnTextBlock.Text = $"{_game.Player1.Name}'s turn";
@@ -70,22 +73,24 @@ namespace Boogle
             string word = WordInputTextBox.Text.Trim().ToUpper();
             if (_game.Board.checkValidWord(word))
             {
-                _game.CurrentPlayer.Add_Word(word);
-                int lastGain = Game.CalculatePoints(word);
-                _game.CurrentPlayer.Score += lastGain;
-                if (_game.CurrentPlayer == _game.Player1)
+                if (!_game.CurrentPlayer.WordsPlayedTurn.Contains(word))
                 {
-                    Player1PointsTextBlock.Text = $"Points: {_game.CurrentPlayer.Score}";
+                    _game.CurrentPlayer.Add_Word(word);
+                    int lastGain = Game.CalculatePoints(word);
+                    _game.CurrentPlayer.Score += lastGain;
+                    if (_game.CurrentPlayer == _game.Player1)
+                    {
+                        Player1PointsTextBlock.Text = $"Points: {_game.CurrentPlayer.Score}";
+                    }
+                    else
+                    {
+                        Player2PointsTextBlock.Text = $"Points: {_game.CurrentPlayer.Score}";
+                    }
                 }
-                else
-                {
-                    Player2PointsTextBlock.Text = $"Points: {_game.CurrentPlayer.Score}";
-                }
-                //Console.WriteLine(string.Format("You have scored {0} with {1}.", lastGain, word));
             }
             else
             {
-                MessageBox.Show($"{word} is not a valid word for some fucking reasons");
+                ShakeTextBox(WordInputTextBox);
             }
             //end logic
             WordInputTextBox.Clear();
@@ -102,6 +107,17 @@ namespace Boogle
 
             if (_game.RoundRemaining == 0)
             {
+                Bitmap playerCloud;
+                if (_player2IsAI || _game.Player1.Score > _game.Player2.Score)
+                {
+                    playerCloud = WordCloudGenerator.CreateWordCloud(_game.Player1.WordsFound);
+                }
+                else
+                {
+                    playerCloud = WordCloudGenerator.CreateWordCloud(_game.Player2.WordsFound);
+                }
+                string filePath = System.IO.Path.Combine(DirectoryPath.GetSolutionRoot(), "assets", "word_cloud_player1.png");
+                WordCloudGenerator.SaveWordCloud(playerCloud, filePath);
                 NavigationService?.Navigate(new WordCloudPage());
                 return;
             }
@@ -116,6 +132,7 @@ namespace Boogle
                     sumPoints += Game.CalculatePoints(word);
                 }
                 _game.Ai.Score += sumPoints;
+                //MessageBox.Show(string.Join(" ", listOfWords) + sumPoints);
                 Player2PointsTextBlock.Text = $"Points: {_game.Ai.Score}";    
             }
             else
@@ -128,6 +145,7 @@ namespace Boogle
         {
             _game.CurrentPlayer.Clock.Stop();
             _game.CurrentPlayer.Clock.Reset();
+            _game.CurrentPlayer.WordsReset();
             if (_game.CurrentPlayer == _game.Player1)
             {
                 _game.CurrentPlayer = _game.Player2;
@@ -145,6 +163,42 @@ namespace Boogle
             {
                 SubmitWordButton_Click(sender, e);
             }
+        }
+
+        private void ShakeTextBox(TextBox textBox)
+        {
+            const int shakeDelta = 5; // Amount to move left and right
+            const int shakeDuration = 50; // Duration of each shake in milliseconds
+            int shakes = 5; // Number of shakes (must be an odd number)
+
+            Storyboard storyboard = new Storyboard();
+
+            // Create the animation for horizontal shaking
+            for (int i = 0; i < shakes; i++)
+            {
+                DoubleAnimation shakeAnimation = new DoubleAnimation
+                {
+                    From = (i % 2 == 0) ? 0 : -shakeDelta, // Alternating between left and right
+                    To = (i % 2 == 0) ? shakeDelta : 0,
+                    Duration = TimeSpan.FromMilliseconds(shakeDuration / 2),
+                    AutoReverse = false
+                };
+
+                // Add the animation to the Storyboard targeting the TranslateTransform
+                Storyboard.SetTarget(shakeAnimation, textBox);
+                Storyboard.SetTargetProperty(shakeAnimation, new PropertyPath("(RenderTransform).(TranslateTransform.X)"));
+
+                storyboard.Children.Add(shakeAnimation);
+            }
+
+            // Apply a TranslateTransform if not already present
+            if (textBox.RenderTransform == null || !(textBox.RenderTransform is TranslateTransform))
+            {
+                textBox.RenderTransform = new TranslateTransform();
+            }
+
+            // Start the shake animation
+            storyboard.Begin();
         }
 
         private void InitializeGameBoard()
@@ -175,7 +229,7 @@ namespace Boogle
             {
                 Line verticalLine = new Line
                 {
-                    Stroke = new SolidColorBrush(Color.FromArgb(255, 63, 255, 255)),
+                    Stroke = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 63, 255, 255)),
                     StrokeThickness = 1,
                     X1 = col * cellSize,
                     Y1 = 0,
@@ -190,7 +244,7 @@ namespace Boogle
             {
                 Line horizontalLine = new Line
                 {
-                    Stroke = new SolidColorBrush(Color.FromArgb(255, 63, 255, 255)),
+                    Stroke = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 63, 255, 255)),
                     StrokeThickness = 1,
                     X1 = 0,
                     Y1 = row * cellSize,

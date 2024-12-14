@@ -113,16 +113,7 @@
                         </StackPanel>
                     </StackPanel>
 
-                    <!-- Board Size -->
-                    <TextBlock Text="Board Size (4-8)" FontSize="20" Foreground="White" Margin="0,0,0,10"/>
-                    <Slider Name="BoardSizeSlider" 
-                            Minimum="4" 
-                            Maximum="8" 
-                            TickPlacement="BottomRight" 
-                            TickFrequency="1" 
-                            IsSnapToTickEnabled="True" 
-                            Height="50"
-                            Margin="0,0,0,20"/>
+
 
                     <!-- Number of Turns -->
                     <TextBlock Text="Number of Turns (1-5)" FontSize="20" Foreground="White" Margin="0,0,0,10"/>

@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using directoryPath;
+using System.IO;
 
 namespace Boogle
 {
@@ -23,6 +25,16 @@ namespace Boogle
         public WordCloudPage()
         {
             InitializeComponent();
+
+            // Set the image source in C#
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+
+            string filePath = System.IO.Path.Combine(DirectoryPath.GetSolutionRoot(), "assets", "word_cloud_player1.png");
+            bitmap.UriSource = new System.Uri(filePath); // Replace with your image path
+            bitmap.EndInit();
+
+            myImage.Source = bitmap;
         }
     }
 }

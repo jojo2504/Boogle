@@ -53,8 +53,6 @@ namespace Boogle
             bool isEnglishEnabled = EnglishCheckBox.IsChecked ?? false;
             bool isFrenchEnabled = FrenchCheckBox.IsChecked ?? false;
 
-            // Get values from the sliders
-            int boardSize = (int)BoardSizeSlider.Value;
             int numberOfTurns = (int)NumberOfTurnsSlider.Value;
             int timeMinutes = int.TryParse(MinutesTextBox.Text, out int minutes) ? minutes : 0;
             int timeSeconds = int.TryParse(SecondsTextBox.Text, out int seconds) ? seconds : 0;
@@ -71,7 +69,7 @@ namespace Boogle
             {
                 languages.Add("fr");
             }
-            Game game = new Game(boardSize, boardSize, languages);
+            Game game = new Game(languages);
             //MessageBox.Show($"Game initialized with:\nPlayer 1: {player1Name}\nPlayer 2: {player2Name}\nBoard Size: {boardSize}\nNumber of Turns: {numberOfTurns}\nTime per Turn: {finalTime}s");
             NavigateToGamePage(game, numberOfTurns, finalTime, player1Name, player2Name, isAIEnabled);
         }
