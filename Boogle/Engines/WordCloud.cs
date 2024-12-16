@@ -17,6 +17,8 @@ namespace Boogle.Engines{
         /// <param name="minimumCount">Minimum number of occurrences to appear</param>
         /// <returns>Bitmap containing the word cloud</returns>
         public static Bitmap CreateWordCloud(
+            string playerName,
+            int maxOccurrence,
             Dictionary<string, int> wordOccurrences,
             int width = 800,
             int height = 600,
@@ -36,9 +38,6 @@ namespace Boogle.Engines{
                 graphics.Clear(Color.White);
                 graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-                // Calculate maximum occurrence
-                int maxOccurrence = filteredWords.Any() ? filteredWords.Max(w => w.Value) : 1;
-
                 // Random number generator
                 Random random = new Random();
 
@@ -55,11 +54,40 @@ namespace Boogle.Engines{
                 // List to track occupied areas
                 List<RectangleF> occupiedAreas = new List<RectangleF>();
 
+                float fontSize = CalculateFontSize(maxOccurrence, maxOccurrence);
+
+                using (Font font = new Font(FontFamily.GenericSansSerif, fontSize, FontStyle.Bold))
+                    {
+                        // Measure word size
+                        SizeF wordSize = graphics.MeasureString(playerName, font);
+
+                        // Find non-overlapping position
+                        PointF position = new PointF(210,230);
+
+                        // Random color
+                        Color color = Color.FromArgb(0,0,0);
+                        
+                        using (SolidBrush brush = new SolidBrush(color))
+                        {
+                            // Optional rotation
+                            //graphics.RotateTransform(random.Next(-30, 30));
+                            
+                            // Draw the word
+                            graphics.DrawString(playerName, font, brush, position);
+                            
+                            // Reset transformation
+                            graphics.ResetTransform();
+
+                            // Add occupied area
+                            occupiedAreas.Add(new RectangleF(position, wordSize));
+                        }
+                    }
+
                 // Process each word
                 foreach (var word in filteredWords)
                 {
                     // Calculate proportional font size
-                    float fontSize = CalculateFontSize(word.Value, maxOccurrence);
+                    fontSize = CalculateFontSize(word.Value, maxOccurrence);
                     
                     // Choose font
                     using (Font font = new Font(FontFamily.GenericSansSerif, fontSize, FontStyle.Bold))

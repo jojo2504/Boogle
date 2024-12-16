@@ -85,10 +85,10 @@ namespace Boogle.Engines
             Console.WriteLine("Here is a short recap : \n"+_player1.toString()+"\n"+_player2.toString());
             Console.WriteLine(ProcessWinner(_player1, _player2));
 
-            Bitmap player1Cloud = WordCloudGenerator.CreateWordCloud(_player1.WordsFound);
+            Bitmap player1Cloud = CreationWordCloud(_player1);
             WordCloudGenerator.SaveWordCloud(player1Cloud, "word_cloud_player1.png");
 
-            Bitmap player2Cloud = WordCloudGenerator.CreateWordCloud(_player2.WordsFound);
+            Bitmap player2Cloud = CreationWordCloud(_player2);
             WordCloudGenerator.SaveWordCloud(player2Cloud, "word_cloud_player2.png");
         }
 
@@ -109,6 +109,19 @@ namespace Boogle.Engines
             return currentWordGain;
         }
 
+        public static Bitmap CreationWordCloud(Player player)
+        {
+            int maxOccurrences = 0;
+            foreach (KeyValuePair<string, int> k in player.WordsFound)
+            {
+                if (k.Value > maxOccurrences)
+                {
+                    maxOccurrences = k.Value;
+                }
+            }
+            Bitmap playerCloud = WordCloudGenerator.CreateWordCloud(player.Name,maxOccurrences+2,player.WordsFound);
+            return playerCloud;
+        }
         public string ProcessWinner(Player player1, Player player2){
             if (player1.Score != player2.Score){
                 string winner = player1.Score > player2.Score ? player1.Name : player2.Name;

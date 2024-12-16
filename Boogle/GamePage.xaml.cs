@@ -108,15 +108,17 @@ namespace Boogle
             if (_game.RoundRemaining == 0)
             {
                 Bitmap playerCloud;
+                string filePath;
                 if (_player2IsAI || _game.Player1.Score > _game.Player2.Score)
                 {
-                    playerCloud = WordCloudGenerator.CreateWordCloud(_game.Player1.WordsFound);
+                    playerCloud = Game.CreationWordCloud(_game.Player1);
+                    filePath = System.IO.Path.Combine(DirectoryPath.GetSolutionRoot(), "assets", "word_cloud_player1.png");
                 }
                 else
                 {
-                    playerCloud = WordCloudGenerator.CreateWordCloud(_game.Player2.WordsFound);
+                    playerCloud = Game.CreationWordCloud(_game.Player2);
+                    filePath = System.IO.Path.Combine(DirectoryPath.GetSolutionRoot(), "assets", "word_cloud_player2.png");
                 }
-                string filePath = System.IO.Path.Combine(DirectoryPath.GetSolutionRoot(), "assets", "word_cloud_player1.png");
                 WordCloudGenerator.SaveWordCloud(playerCloud, filePath);
                 NavigationService?.Navigate(new WordCloudPage());
                 return;
