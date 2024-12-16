@@ -110,11 +110,11 @@ For the implementation of the graph, we put in place a custom generic collection
 1. V is the number of vertices.
 2. E is the number of edges.
 
-| Graph Representation | Space Complexity | Add Edge Time | Check Edge Time | Traversal Time
-| ------------------ | -------  | ---- | ------ | ------ |
-| Adjacency Matrix   | O(V^2)   | O(1) | O(1)   | O(V^2) |
-| Adjacency List     | O(V+E)   | O(1) | O(deg) | O(V+E) |
-| Edge List          | O(E)     | O(1) | O(E)   | O(E)   |
+| Graph Representation | Space Complexity | Add Edge Time | Check Edge Time | Traversal Time |
+| -------------------- | ---------------  | ------------- | --------------- | -------------- |
+|   Adjacency Matrix   |      O(V^2)      |      O(1)     |      O(1)       |      O(V^2)    |
+|   Adjacency List     |      O(V+E)      |      O(1)     |      O(deg)     |      O(V+E)    |
+|   Edge List          |      O(E)        |      O(1)     |      O(E)       |      O(E)      |
 
 Here we are using a Adjacency List.
 
