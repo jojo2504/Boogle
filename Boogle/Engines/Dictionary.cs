@@ -101,6 +101,42 @@ namespace Boogle.Engines
             }
             return Helper(word, left, right);
         } 
+
+    public static int[] MergeSortArray(int[] arr)
+    {
+        if (arr.Length <= 1)
+            return arr;
+
+        int mid = arr.Length / 2;
+        int[] left = new int[mid];
+        int[] right = new int[arr.Length - mid];
+
+        Array.Copy(arr, 0, left, 0, mid);
+        Array.Copy(arr, mid, right, 0, arr.Length - mid);
+
+        left = MergeSortArray(left);
+        right = MergeSortArray(right);
+
+        int[] result = new int[arr.Length];
+        int i = 0, j = 0, k = 0;
+
+        while (i < left.Length && j < right.Length)
+        {
+            if (left[i] < right[j])
+                result[k++] = left[i++];
+            else
+                result[k++] = right[j++];
+        }
+
+        while (i < left.Length)
+            result[k++] = left[i++];
+
+        while (j < right.Length)
+            result[k++] = right[j++];
+
+        return result;
+    }
+
         public List<string> WordList => _wordList;
         public TrieNode Root => _root;
     }
