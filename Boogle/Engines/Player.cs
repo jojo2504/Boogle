@@ -1,9 +1,13 @@
 namespace Boogle.Engines{
-    class Player{
+    public class Player{
         string _name;
         int _score = 0;
+
+        Clock _clock;
         
         Dictionary<string, int> _wordsFound = new Dictionary<string, int>();
+
+        List<string> _wordsPlayedTurn = new();
 
         public Player(string _name)
         {
@@ -33,6 +37,14 @@ namespace Boogle.Engines{
             {
                 _wordsFound.Add(mot,1);
             }
+
+            if (!_wordsPlayedTurn.Contains(mot)){
+                _wordsPlayedTurn.Add(mot);
+            }
+        }
+
+        public void WordsReset(){
+            _wordsPlayedTurn.Clear();
         }
 
         public string toString()
@@ -58,5 +70,9 @@ namespace Boogle.Engines{
         {
             get {return _wordsFound;}
         }
+
+        public Clock Clock { get; internal set; }
+
+        public List<string> WordsPlayedTurn => _wordsPlayedTurn;
     }
 }

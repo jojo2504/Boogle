@@ -1,8 +1,9 @@
 using KaimiraGames;
 using directoryPath;
+using System.IO;
 
 namespace Boogle.Engines{
-    class Dice{
+    public class Dice{
         readonly WeightedList<char> _weightedList = InitializeWeight();
         readonly Random _random = new Random();
         char[] _faces;
