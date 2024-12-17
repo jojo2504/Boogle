@@ -13,7 +13,11 @@ namespace Boogle.Engines{
         {
             this._name = _name;
         }
-
+        /// <summary>
+        /// Verify if the word is contain in the dictionary as a key
+        /// </summary>
+        /// <param name="mot"></param>
+        /// <returns></returns>
         public bool Contain(string mot)
         {
             bool isContained = false;
@@ -27,6 +31,10 @@ namespace Boogle.Engines{
             return isContained;
         }
 
+        /// <summary>
+        /// Add the word to the dictionary as a key or increase its value by 1
+        /// </summary>
+        /// <param name="mot"></param>
         public void Add_Word (string mot)
         {
             if (Contain(mot))
@@ -42,11 +50,16 @@ namespace Boogle.Engines{
                 _wordsPlayedTurn.Add(mot);
             }
         }
-
+        /// <summary>
+        /// Clear wordsPlayerTurn
+        /// </summary>
         public void WordsReset(){
             _wordsPlayedTurn.Clear();
         }
-
+        /// <summary>
+        /// Create a string to describe a player
+        /// </summary>
+        /// <returns></returns>
         public string toString()
         {
             string descriptionPlayer = string.Format("{0} has {1} points and has found those words :\n", _name, _score);

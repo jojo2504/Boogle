@@ -5,7 +5,7 @@ namespace Boogle.Engines
 {
     public class Dictionary
     {
-        readonly List<string> _wordList = []; //store all words in a list 
+        readonly List<string> _wordList = []; 
         TrieNode _root = new TrieNode();
 
         public Dictionary(List<string> languageIDs){
@@ -31,7 +31,6 @@ namespace Boogle.Engines
         public void InitWords(string filePath){
             string words = File.ReadAllLines(filePath)[0];
             
-            // Split the text into words (assuming they are separated by spaces)
             string[] wordArray = words.Split([' ', '\t', '\n', '\r'], StringSplitOptions.RemoveEmptyEntries);
 
             foreach (string word in wordArray)
@@ -94,7 +93,6 @@ namespace Boogle.Engines
                 }
             }
         
-            // Set right to _wordList.Count - 1 if it’s the default value (-1)
             if (right == -1)
             {
                 right = validWords.Count - 1;
