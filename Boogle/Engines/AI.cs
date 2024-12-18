@@ -8,7 +8,6 @@ namespace Boogle.Engines{
         public SortedList<string,string> Play(char[,]? board = null){
             return _board.getAllValidWordsOnBoard(_board.Dictionary.Root, board);
         }
-
         public Board Board { get; internal set; }
         public int Score { get; internal set; }
     }

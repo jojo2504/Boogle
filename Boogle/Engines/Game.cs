@@ -119,7 +119,7 @@ namespace Boogle.Engines
                     maxOccurrences = k.Value;
                 }
             }
-            Bitmap playerCloud = WordCloudGenerator.CreateWordCloud(player.Name,maxOccurrences+2,player.WordsFound);
+            Bitmap playerCloud = WordCloudGenerator.CreateWordCloud(player,maxOccurrences+2,player.WordsFound);
             return playerCloud;
         }
         public string ProcessWinner(Player player1, Player player2){
