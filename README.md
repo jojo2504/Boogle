@@ -3,7 +3,6 @@
 
 ## Summary
 - [Introduction](https://github.com/jojo2504/Boogle?tab=readme-ov-file#introduction)
-- [Features (TODO)](https://github.com/jojo2504/Boogle?tab=readme-ov-file#features-todo)
 - [Features (DONE)](https://github.com/jojo2504/Boogle?tab=readme-ov-file#features-done)
 - [Getting Started (For Custom Building)](https://github.com/jojo2504/Boogle?tab=readme-ov-file#getting-started-for-custom-building)
 - [Usage](https://github.com/jojo2504/Boogle?tab=readme-ov-file#usage)
@@ -15,9 +14,6 @@
 This project explores the design and implementation of a dynamic word game inspired by the popular Boggle game. Our work encompasses a range of tasks, including developing an algorithm to generate a randomized letter grid, implementing efficient word search mechanisms, and ensuring valid word identification using a comprehensive dictionary. We have also focused on creating an engaging user interface, optimizing gameplay mechanics for fairness and fun, and enabling multiplayer functionality for competitive play. Additionally, we analyzed scoring systems, incorporated a timer for added challenge, and tested the application for reliability and usability. This project demonstrates a blend of programming, algorithm design, and user-centric development, offering insights into building interactive games.
 ### This repository is a project for A2/S3 students in computer sciences.
 
-## Features (TODO)
-- Displays the final scores and the winner.
-
 ## Features (DONE)
 - Supports multiple languages (French and English by default).
 - Maintains a list of words found by each player.
@@ -27,24 +23,44 @@ This project explores the design and implementation of a dynamic word game inspi
 - Customizable game settings, including the size of the game board and the duration of the game.
 - Calculates the score of each word based on the point values of the letters and the length of the word.
 - Implement the game logic.
+- Displays the final scores and the winner.
 
 ## Getting Started (For Custom Building)
-1. Clone the repository to your local machine with `git clone --recurse-submodules <repository-url>`
+1. Clone the repository to your local machine or download the latest release.
 2. Run the project to start the game
-   - Use `dotnet run` if you're using .NET, .NET version is `8.0`.
-   - For debugging purpose use `dotnet run --property:OutputType=Exe` which forces terminal outputs
-3. A prebuild version will be released at the end of the project.
+   - .NET version is `8.0`.
 
 ## Usage
-1. Play the game
-2. Once the game starts, the game board will be displayed, and the first player will have 1 minute to find as many words as possible.
+1. Start the game
+2. Once the game starts, a menu will open, you can play with both languages, the minimum time required for the game to start is 1 minute.
 3. The player types in the words they have found, and the game will validate them against the dictionary and calculate the score.
-4. After the first player's turn, the next player will have their turn, and so on until the time limit is reached.
+4. After each player's turn, their timer will reset for the next round, and so on until the end.
 5. Enjoy
    
-## Implementation Details
+## Implementation Details and Researches
 1. For the User Interface, the solution will be a **Windows Application WPF**.
 ![UML class model](/markdownassets/UML-class-model.png)
+### Researches
+Researches in french with AI for the implementation of the wordcloud:
+```
+Afin d’obtenir un panel complet d’information sur la création d’un nuage de mots, nous avons demandé à plusieurs IA de nous en parler. Afin d’obtenir une réponse en accord avec notre code, nous leurs avons demandés de créer un nuage de mots à partir d’un dictionnaire contenant en clé les mots et en valeur leur occurrence :
+	
+Selon chatgpt : il faut installer System.Drawing.Common, cela nous permettra d’afficher une image contenant un nuage de mot. Les mots auront une couleur générée aléatoirement, leur taille dépend de l’occurrence maximale et de l’occurrence minimale contenu dans le dictionnaire et leur position sera aléatoire. Sa solution comporte malheureusement quelques défauts, le nuage a forcément une forme rectangulaire et les mots dans le nuage peuvent se superposer.
+ 
+Selon Gemini : il nous propose d’utiliser une bibliothèque extérieure, WordCloud. Cette solution est assez simple et marche très bien une fois la bibliothèque importée.
+
+Selon Claude : il nous propose d’utiliser System.Drawing. Pour créer un nuage de mot, il utilise une classe afin de pouvoir modifier la largeur, la hauteur, et l’occurrence minimum d’un mot pour qu’il soit affiché sur le nuage qui est sous forme de Bitmap. Sa solution est la plus complète des trois, elle contient beaucoup d'explications et est créée de toute pièce ce qui nous permet de mieux comprendre le fonctionnement. Cette solution règle les problèmes des autres, les mots ne peuvent pas se chevaucher, le code ne contient pas de bibliothèques importées et les couleurs sont harmonieuses.
+```
+Thanks to all the open website for all the necessary researches:
+- Geeksforgeeks
+  - [DFS](https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/)
+  - [BFS](https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/)
+  - [Trie](https://www.geeksforgeeks.org/trie-insert-and-search/)
+- Stack Overflow
+  - [Matrix to graph](https://stackoverflow.com/questions/25405165/converting-a-2d-matrix-into-a-graph)
+- Open Source Code
+  - [Kaimira Weighted List](https://github.com/cdanek/KaimiraWeightedList)
+  - [Xunit Test](https://youtu.be/a6Qab5l-VLo?si=GnBbtZB2TMos5iqO)
 
 ## Path of work
 ### Chapter 1 : What's the problem ?

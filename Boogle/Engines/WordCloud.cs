@@ -17,7 +17,7 @@ namespace Boogle.Engines{
         /// <param name="minimumCount">Minimum number of occurrences to appear</param>
         /// <returns>Bitmap containing the word cloud</returns>
         public static Bitmap CreateWordCloud(
-            string playerName,
+            Player player,
             int maxOccurrence,
             Dictionary<string, int> wordOccurrences,
             int width = 800,
@@ -52,7 +52,7 @@ namespace Boogle.Engines{
 
                 using (Font font = new Font(FontFamily.GenericSansSerif, fontSize, FontStyle.Bold))
                     {
-                        SizeF wordSize = graphics.MeasureString(playerName, font);
+                        SizeF wordSize = graphics.MeasureString(player.Name, font);
 
                         PointF position = new PointF(210,230);
 
@@ -60,7 +60,7 @@ namespace Boogle.Engines{
                         
                         using (SolidBrush brush = new SolidBrush(color))
                         {
-                            graphics.DrawString(playerName, font, brush, position);
+                            graphics.DrawString($"{player.Name}: {player.Score} points", font, brush, position);
 
                             graphics.ResetTransform();
 

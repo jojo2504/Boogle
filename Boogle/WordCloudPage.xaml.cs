@@ -22,15 +22,13 @@ namespace Boogle
     /// </summary>
     public partial class WordCloudPage : Page
     {
-        public WordCloudPage()
+        public WordCloudPage(string filePath)
         {
             InitializeComponent();
 
             // Set the image source in C#
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
-
-            string filePath = System.IO.Path.Combine(DirectoryPath.GetSolutionRoot(), "assets", "word_cloud_player1.png");
             bitmap.UriSource = new System.Uri(filePath); // Replace with your image path
             bitmap.EndInit();
 
