@@ -51,13 +51,14 @@ namespace Boogle.Engines{
             }
         }
         /// <summary>
-        /// Clear wordsPlayerTurn
+        /// Clear the list wordsPlayerTurn
         /// </summary>
         public void WordsReset(){
             _wordsPlayedTurn.Clear();
         }
+
         /// <summary>
-        /// Create a string to describe a player
+        /// Create a string to describe a Player
         /// </summary>
         /// <returns></returns>
         public string toString()

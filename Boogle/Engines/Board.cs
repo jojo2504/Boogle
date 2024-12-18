@@ -40,7 +40,9 @@ namespace Boogle.Engines
             }
             _graph.SetMatrix(_matrix);
         }
-
+        /// <summary>
+        /// Update the matrix with the board
+        /// </summary>
         public void UpdateMatrix(){
             for (int row = 0; row < _boardWidth; row++)
             {
@@ -56,7 +58,6 @@ namespace Boogle.Engines
         /// <summary>
         /// Console Debugging Purpose
         /// </summary>
-
         public override string ToString(){
             int index = 0;
             string chainDescribeBoard = "";
@@ -71,12 +72,19 @@ namespace Boogle.Engines
             }
             return chainDescribeBoard;    
         }
-
+        /// <summary>
+        /// Create a string to describe a board
+        /// </summary>
+        /// <returns></returns>
         public string toString()
         {
             return string.Format("This board is a {0}*{1} with {3} dices.",_boardHeight,_boardWidth,_caseNumbers);
         }
-
+        /// <summary>
+        /// Verify if the word is on the board
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
         public bool checkValidWord(string word){
             return _dictionary.RechDichoRecursif(_validWords, word);
         }

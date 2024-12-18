@@ -102,9 +102,13 @@ namespace Boogle.Engines{
             return bitmap;
         }
 
+        
         /// <summary>
-        /// Calculates font size based on occurrence
+        /// Calculate a proportional font size
         /// </summary>
+        /// <param name="occurrence"></param>
+        /// <param name="maxOccurrence"></param>
+        /// <returns></returns>
         private static float CalculateFontSize(int occurrence, int maxOccurrence)
         {
             const float MIN_SIZE = 10f;
@@ -117,8 +121,14 @@ namespace Boogle.Engines{
         }
 
         /// <summary>
-        /// Finds a free position without overlap
+        /// Try to find a position that isn't occupied
         /// </summary>
+        /// <param name="occupiedAreas"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="wordSize"></param>
+        /// <param name="random"></param>
+        /// <returns></returns>
         private static PointF FindFreePosition(
             List<RectangleF> occupiedAreas,
             int width,
@@ -150,8 +160,10 @@ namespace Boogle.Engines{
         }
 
         /// <summary>
-        /// Saves the word cloud
+        /// Save the Bitmap as a png on the fila path
         /// </summary>
+        /// <param name="bitmap"></param>
+        /// <param name="filePath"></param>
         public static void SaveWordCloud(Bitmap bitmap, string filePath)
         {
             bitmap.Save(filePath);
