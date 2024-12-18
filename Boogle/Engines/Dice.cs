@@ -10,17 +10,19 @@ namespace Boogle.Engines{
         int _currentIndexFace;
 
         public Dice(int faces = 6){
-            _faces = new char[faces]; // ${faces} faces
+            _faces = new char[faces]; 
             GenerateFaces();
         }
-
+        /// <summary>
+        /// Initialize the weight of the different letters
+        /// </summary>
+        /// <returns></returns>
         private static WeightedList<char> InitializeWeight(){
             WeightedList<char> weightedList = new();
             
             string filePath = Path.Combine(DirectoryPath.GetSolutionRoot(), "Utils", "letters");
             try
             {
-                // Create a StreamReader
                 using (StreamReader streamReader = new StreamReader(Path.Combine(filePath))){
                     string line;
                     while ((line = streamReader.ReadLine()) != null)
@@ -41,20 +43,27 @@ namespace Boogle.Engines{
 
             return weightedList;
         }
-
+        /// <summary>
+        /// Generate the six faces of a dice
+        /// </summary>
         public void GenerateFaces(){
             for(int i=0; i<_faces.Length; i++){
-                _faces[i] = _weightedList.Next(); //returns a random letter based on the weightedList
+                _faces[i] = _weightedList.Next(); 
             }
         }
-        // Represent Lance(random r) in Dé
+        /// <summary>
+        /// Roll the dice
+        /// </summary>
         public void RollDice(){
             _currentIndexFace = _random.Next(0, _faces.Length-1);
         }
-
+        /// <summary>
+        /// Create a string to describe a dice
+        /// </summary>
+        /// <returns></returns>
         public string toString()
         {
-            string chainDescribeDice = "This die is composed of 6 faces with the value :\n";
+            string chainDescribeDice = "This dice is composed of 6 faces with the value :\n";
             for(int i = 0; i < _faces.Length; i++)
             {
                 chainDescribeDice += string.Format("{0} on the n°{1} face\n",_faces[i],i);

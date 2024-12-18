@@ -5,6 +5,11 @@ namespace Boogle.Engines{
         public AI(Board board){
             _board = board;
         }
+        /// <summary>
+        /// Create a sortedList with all valid words on the board
+        /// </summary>
+        /// <param name="board"></param>
+        /// <returns></returns>
         public SortedList<string,string> Play(char[,]? board = null){
             return _board.getAllValidWordsOnBoard(_board.Dictionary.Root, board);
         }

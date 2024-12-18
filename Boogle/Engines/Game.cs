@@ -32,6 +32,10 @@ namespace Boogle.Engines
         {
         }
 
+        /// <summary>
+        /// Initialize the game
+        /// </summary>
+        /// <returns></returns>
         public static Game InitGame(){
             string userInput;
             List<string> languages = new();
@@ -56,7 +60,9 @@ namespace Boogle.Engines
 
             return game;
         }
-
+        /// <summary>
+        /// Start the game
+        /// </summary>
         public void Start(){
             Console.WriteLine("Enter the number of rounds you want to play : ");
             int remainingRounds = Convert.ToInt32(Console.ReadLine());
@@ -91,7 +97,9 @@ namespace Boogle.Engines
             Bitmap player2Cloud = CreationWordCloud(_player2);
             WordCloudGenerator.SaveWordCloud(player2Cloud, "word_cloud_player2.png");
         }
-
+        /// <summary>
+        /// Change the player playing
+        /// </summary>
         public void ChangeTurn(){
             if (_currentPlayer == _player1){
                 _currentPlayer = _player2;
@@ -101,6 +109,11 @@ namespace Boogle.Engines
             }
         }
 
+        /// <summary>
+        /// Calculate the amount of points of a word
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
         public static int CalculatePoints(string word){
             int currentWordGain = 0;
             foreach (char letter in word){
@@ -109,6 +122,11 @@ namespace Boogle.Engines
             return currentWordGain;
         }
 
+        /// <summary>
+        /// Create the wordCloud of a Player
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
         public static Bitmap CreationWordCloud(Player player)
         {
             int maxOccurrences = 0;
@@ -122,6 +140,12 @@ namespace Boogle.Engines
             Bitmap playerCloud = WordCloudGenerator.CreateWordCloud(player,maxOccurrences+2,player.WordsFound);
             return playerCloud;
         }
+        /// <summary>
+        /// Find out who won
+        /// </summary>
+        /// <param name="player1"></param>
+        /// <param name="player2"></param>
+        /// <returns></returns>
         public string ProcessWinner(Player player1, Player player2){
             if (player1.Score != player2.Score){
                 string winner = player1.Score > player2.Score ? player1.Name : player2.Name;
@@ -131,7 +155,10 @@ namespace Boogle.Engines
                 return "It's a tie!";
             }
         }
-
+        /// <summary>
+        /// Initialize the dictionary that contain the letters and their points
+        /// </summary>
+        /// <returns></returns>
         private static Dictionary<char,int> InitializeLetterPoints()
         {
             Dictionary<char, int> letterPoints = new Dictionary<char, int>();

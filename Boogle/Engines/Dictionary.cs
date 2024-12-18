@@ -5,7 +5,7 @@ namespace Boogle.Engines
 {
     public class Dictionary
     {
-        readonly List<string> _wordList = []; //store all words in a list 
+        readonly List<string> _wordList = []; 
         TrieNode _root = new TrieNode();
 
         public Dictionary(List<string> languageIDs){
@@ -27,11 +27,13 @@ namespace Boogle.Engines
                 _wordList.Sort();
             }
         }
-
+        /// <summary>
+        /// Initialize the list that contain all the word in the dictionary
+        /// </summary>
+        /// <param name="filePath"></param>
         public void InitWords(string filePath){
             string words = File.ReadAllLines(filePath)[0];
             
-            // Split the text into words (assuming they are separated by spaces)
             string[] wordArray = words.Split([' ', '\t', '\n', '\r'], StringSplitOptions.RemoveEmptyEntries);
 
             foreach (string word in wordArray)
@@ -41,7 +43,10 @@ namespace Boogle.Engines
                 _wordList.Add(word);
             }
         }
-
+        /// <summary>
+        /// Create a string to describe the dictionary
+        /// </summary>
+        /// <returns></returns>
         public override string ToString(){
             Dictionary<int, int> wordsByLength = new Dictionary<int, int>();
             Dictionary<char, int> wordsByLetter = new Dictionary<char,int>();
@@ -71,7 +76,14 @@ namespace Boogle.Engines
             chainDescribeDictionary += string.Format("There is {0} words in the current dictionary", _wordList.Count);
             return chainDescribeDictionary;
         }
-
+        /// <summary>
+        /// Dichotomous research to find a word in a SortedList
+        /// </summary>
+        /// <param name="validWords"></param>
+        /// <param name="word"></param>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public bool RechDichoRecursif(SortedList<string, string> validWords, string word, int left = 0, int right = -1)
         {   
             bool Helper(string word, int left, int right)
@@ -94,14 +106,17 @@ namespace Boogle.Engines
                 }
             }
         
-            // Set right to _wordList.Count - 1 if it’s the default value (-1)
             if (right == -1)
             {
                 right = validWords.Count - 1;
             }
             return Helper(word, left, right);
         } 
-
+    /// <summary>
+    /// Merge sort for a list of int
+    /// </summary>
+    /// <param name="arr"></param>
+    /// <returns></returns>
     public static int[] MergeSortArray(int[] arr)
     {
         if (arr.Length <= 1)

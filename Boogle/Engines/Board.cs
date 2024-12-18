@@ -40,7 +40,9 @@ namespace Boogle.Engines
             }
             _graph.SetMatrix(_matrix);
         }
-
+        /// <summary>
+        /// Update the matrix with the board
+        /// </summary>
         public void UpdateMatrix(){
             for (int row = 0; row < _boardWidth; row++)
             {
@@ -56,7 +58,6 @@ namespace Boogle.Engines
         /// <summary>
         /// Console Debugging Purpose
         /// </summary>
-
         public override string ToString(){
             int index = 0;
             string chainDescribeBoard = "";
@@ -71,12 +72,19 @@ namespace Boogle.Engines
             }
             return chainDescribeBoard;    
         }
-
+        /// <summary>
+        /// Create a string to describe a board
+        /// </summary>
+        /// <returns></returns>
         public string toString()
         {
             return string.Format("This board is a {0}*{1} with {3} dices.",_boardHeight,_boardWidth,_caseNumbers);
         }
-
+        /// <summary>
+        /// Verify if the word is on the board
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
         public bool checkValidWord(string word){
             return _dictionary.RechDichoRecursif(_validWords, word);
         }
@@ -104,44 +112,36 @@ namespace Boogle.Engines
             SortedList<string,string> sortedWordList = new();
             bool[,] visited;
 
-            //loop through all the key node and perform dfs on every one of them
             foreach (Node<char> node in _graph.Graph.Keys){
-                //Console.Write("{0} ", node.Value);
-                //every start of path starts as an empty string prefix
+
                 visited = new bool[_boardWidth,_boardHeight];
                 DFS(visited, node, string.Empty); 
             }
 
             void DFS(bool[,] visited, Node<char> node, string currentPrefix){
-                // Check if this node has already been visited
+
                 if (visited[node.Row, node.Col]){
                     return;
                 }
-                // update the current visited nodes
+
                 visited[node.Row, node.Col] = true;
 
                 string dfsPrefix = currentPrefix + node.Value;
 
-                // check if the prefix exists in the trie
-                // if not, end the dfs at this node
                 if (!Trie.SearchPrefix(trieNode, dfsPrefix)){
                     visited[node.Row, node.Col] = false;
                     return;
                 }
 
                 if (Trie.SearchKey(trieNode, dfsPrefix)){
-                    // if the current prefix matches one of the final word in the trie, then add it to the list of possible words
                     sortedWordList[dfsPrefix] = dfsPrefix;
                 }
 
-                // Recursively visit all adjacent vertices
-                // that are not visited yet
                 if (_graph.Graph.TryGetValue(node, out HashSet<Node<char>> neighbors)){
                     foreach (Node<char> neighbor in neighbors){
-                        // Create a copy of the visited array to pass to recursive calls
+
                         bool[,] newVisited = (bool[,])visited.Clone();
-                        
-                        // Recursively visit unvisited neighbors
+
                         DFS(newVisited, neighbor, dfsPrefix);
                     }
                 }

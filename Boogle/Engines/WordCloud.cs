@@ -24,78 +24,59 @@ namespace Boogle.Engines{
             int height = 600,
             int minimumCount = 1)
         {
-            // Filter words based on minimum threshold
             var filteredWords = wordOccurrences
                 .Where(w => w.Value >= minimumCount)
                 .OrderByDescending(w => w.Value)
                 .ToList();
-
-            // Create bitmap
             Bitmap bitmap = new Bitmap(width, height);
             using (Graphics graphics = Graphics.FromImage(bitmap))
             {
-                // White background
+
                 graphics.Clear(Color.White);
                 graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-                // Random number generator
                 Random random = new Random();
 
-                // Color palette
                 Color[] colors = new Color[]
                 {
-                    Color.FromArgb(26, 188, 156),   // Turquoise
-                    Color.FromArgb(46, 204, 113),   // Emerald
-                    Color.FromArgb(52, 152, 219),   // Platform Blue
-                    Color.FromArgb(155, 89, 182),   // Amethyst
-                    Color.FromArgb(52, 73, 94)      // Night Blue
+                    Color.FromArgb(26, 188, 156),   
+                    Color.FromArgb(46, 204, 113),   
+                    Color.FromArgb(52, 152, 219),   
+                    Color.FromArgb(155, 89, 182),   
+                    Color.FromArgb(52, 73, 94)      
                 };
 
-                // List to track occupied areas
                 List<RectangleF> occupiedAreas = new List<RectangleF>();
 
                 float fontSize = CalculateFontSize(maxOccurrence, maxOccurrence);
 
                 using (Font font = new Font(FontFamily.GenericSansSerif, fontSize, FontStyle.Bold))
                     {
-                        // Measure word size
                         SizeF wordSize = graphics.MeasureString(player.Name, font);
 
-                        // Find non-overlapping position
                         PointF position = new PointF(210,230);
 
-                        // Random color
                         Color color = Color.FromArgb(0,0,0);
                         
                         using (SolidBrush brush = new SolidBrush(color))
                         {
-                            // Optional rotation
-                            //graphics.RotateTransform(random.Next(-30, 30));
-                            
-                            // Draw the word
                             graphics.DrawString($"{player.Name}: {player.Score} points", font, brush, position);
-                            
-                            // Reset transformation
+
                             graphics.ResetTransform();
 
-                            // Add occupied area
                             occupiedAreas.Add(new RectangleF(position, wordSize));
                         }
                     }
 
-                // Process each word
                 foreach (var word in filteredWords)
                 {
-                    // Calculate proportional font size
                     fontSize = CalculateFontSize(word.Value, maxOccurrence);
                     
-                    // Choose font
                     using (Font font = new Font(FontFamily.GenericSansSerif, fontSize, FontStyle.Bold))
                     {
-                        // Measure word size
+
                         SizeF wordSize = graphics.MeasureString(word.Key, font);
 
-                        // Find non-overlapping position
                         PointF position = FindFreePosition(
                             occupiedAreas,
                             width,
@@ -103,21 +84,15 @@ namespace Boogle.Engines{
                             wordSize,
                             random);
 
-                        // Random color
                         Color color = colors[random.Next(colors.Length)];
                         
                         using (SolidBrush brush = new SolidBrush(color))
                         {
-                            // Optional rotation
-                            //graphics.RotateTransform(random.Next(-30, 30));
-                            
-                            // Draw the word
+
                             graphics.DrawString(word.Key, font, brush, position);
-                            
-                            // Reset transformation
+
                             graphics.ResetTransform();
 
-                            // Add occupied area
                             occupiedAreas.Add(new RectangleF(position, wordSize));
                         }
                     }
@@ -127,16 +102,18 @@ namespace Boogle.Engines{
             return bitmap;
         }
 
+        
         /// <summary>
-        /// Calculates font size based on occurrence
+        /// Calculate a proportional font size
         /// </summary>
+        /// <param name="occurrence"></param>
+        /// <param name="maxOccurrence"></param>
+        /// <returns></returns>
         private static float CalculateFontSize(int occurrence, int maxOccurrence)
         {
-            // Minimum and maximum size
             const float MIN_SIZE = 10f;
             const float MAX_SIZE = 60f;
 
-            // Proportional calculation
             float size = MIN_SIZE +
                 ((occurrence / (float)maxOccurrence) * (MAX_SIZE - MIN_SIZE));
 
@@ -144,8 +121,14 @@ namespace Boogle.Engines{
         }
 
         /// <summary>
-        /// Finds a free position without overlap
+        /// Try to find a position that isn't occupied
         /// </summary>
+        /// <param name="occupiedAreas"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="wordSize"></param>
+        /// <param name="random"></param>
+        /// <returns></returns>
         private static PointF FindFreePosition(
             List<RectangleF> occupiedAreas,
             int width,
@@ -159,7 +142,6 @@ namespace Boogle.Engines{
 
             do
             {
-                // Random position
                 position = new PointF(
                     random.Next(0, width - (int)wordSize.Width),
                     random.Next(0, height - (int)wordSize.Height)
@@ -167,7 +149,6 @@ namespace Boogle.Engines{
 
                 wordArea = new RectangleF(position, wordSize);
 
-                // Check for overlaps
                 if (!occupiedAreas.Any(a => a.IntersectsWith(wordArea)))
                     return position;
 
@@ -175,21 +156,17 @@ namespace Boogle.Engines{
             }
             while (attempts < 100);
 
-            // Fallback if too many attempts
             return new PointF(random.Next(width), random.Next(height));
         }
 
         /// <summary>
-        /// Saves the word cloud
+        /// Save the Bitmap as a png on the fila path
         /// </summary>
+        /// <param name="bitmap"></param>
+        /// <param name="filePath"></param>
         public static void SaveWordCloud(Bitmap bitmap, string filePath)
         {
             bitmap.Save(filePath);
         }
     }
-    // Usage example
-    // Generate word cloud
-    //Bitmap cloud = WordCloudGenerator.CreateWordCloud(wordOccurrences);          
-    // Save the image
-    //WordCloudGenerator.SaveWordCloud(cloud, "word_cloud.png");
 }

@@ -15,40 +15,48 @@ namespace Boogle.Engines
             _remainingTimeInSeconds = seconds;
             _isRunning = false;
         }
-        
+        /// <summary>
+        /// Start the clock
+        /// </summary>
         public void Start()
         {
             if (!_isRunning)
             {
                 _isRunning = true;
-                _timer = new System.Threading.Timer(UpdateClock, null, 0, 1000); // Update every 1000ms (1 second)
-                //Console.WriteLine("Countdown clock started from 1 minute...");
+                _timer = new System.Threading.Timer(UpdateClock, null, 0, 1000); 
             }
         }
-        
+        /// <summary>
+        /// Reset the clock
+        /// </summary>
         public void Reset()
         {
-            _remainingTimeInSeconds = _seconds; // Reset to 1 minute
-            //Console.WriteLine("Countdown clock reset to 1 minute.");
+            _remainingTimeInSeconds = _seconds; 
+            
         }
-        
+        /// <summary>
+        /// Update the clock by decreasing it or reseting it
+        /// </summary>
+        /// <param name="state"></param>
         private void UpdateClock(object state)
         {
             if (_remainingTimeInSeconds > 0)
             {
                 Console.Clear();
-                //Console.WriteLine("Time Remaining: " + TimeSpan.FromSeconds(_remainingTimeInSeconds).ToString("mm\\:ss"));
+                
                 _remainingTimeInSeconds--;
             }
             else
             {
                 Console.Clear();
-                //Console.WriteLine("Time's up!");
-                Stop(); // Stop the timer when it reaches zero
+                
+                Stop(); 
             }
         }
 
-        // Stop the countdown clock
+       /// <summary>
+       /// Stop the clock
+       /// </summary>
         public void Stop()
         {
             if (_isRunning)
@@ -58,11 +66,17 @@ namespace Boogle.Engines
                 Console.WriteLine("Countdown clock stopped.");
             }
         }
-
+        /// <summary>
+        /// Get the time ramaining on the clock
+        /// </summary>
+        /// <returns></returns>
         public int GetTimeRemaining(){
             return _remainingTimeInSeconds;
         }
-
+        /// <summary>
+        /// Return a string describing the time
+        /// </summary>
+        /// <returns></returns>
         public string GetFormattedTime()
     {
         int minutes = _remainingTimeInSeconds / 60;
