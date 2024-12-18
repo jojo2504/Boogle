@@ -120,7 +120,7 @@ namespace Boogle
                     filePath = System.IO.Path.Combine(DirectoryPath.GetSolutionRoot(), "assets", "word_cloud_player2.png");
                 }
                 WordCloudGenerator.SaveWordCloud(playerCloud, filePath);
-                NavigationService?.Navigate(new WordCloudPage());
+                NavigationService?.Navigate(new WordCloudPage(filePath));
                 return;
             }
             UpdateGameBoard();
