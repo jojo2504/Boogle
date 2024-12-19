@@ -32,7 +32,7 @@ This project explores the design and implementation of a dynamic word game inspi
 
 ## Usage
 1. Start the game
-2. Once the game starts, a menu will open, you can play with both languages, the minimum time required for the game to start is 1 minute.
+2. Once the game starts, a menu will open, you can play with both languages, the minimum time required for the game to start is 10 seconds.
 3. The player types in the words they have found, and the game will validate them against the dictionary and calculate the score.
 4. After each player's turn, their timer will reset for the next round, and so on until the end.
 5. Enjoy

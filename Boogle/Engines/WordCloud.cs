@@ -54,13 +54,13 @@ namespace Boogle.Engines{
                     {
                         SizeF wordSize = graphics.MeasureString(player.Name, font);
 
-                        PointF position = new PointF(210,230);
+                        PointF position = new PointF(200,230);
 
                         Color color = Color.FromArgb(0,0,0);
                         
                         using (SolidBrush brush = new SolidBrush(color))
                         {
-                            graphics.DrawString($"{player.Name}: {player.Score} points", font, brush, position);
+                            graphics.DrawString($"{player.Name} won !", font, brush, position);
 
                             graphics.ResetTransform();
 
@@ -160,7 +160,7 @@ namespace Boogle.Engines{
         }
 
         /// <summary>
-        /// Save the Bitmap as a png on the fila path
+        /// Save the Bitmap as a png at the file path
         /// </summary>
         /// <param name="bitmap"></param>
         /// <param name="filePath"></param>

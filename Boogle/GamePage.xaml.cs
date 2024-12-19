@@ -55,19 +55,20 @@ namespace Boogle
             _game.CurrentPlayer = _game.Player1;
             _boardSize = _game.Board.BoardWidth;
 
-            // Initialize timers and start updating the UI
             StartUITimer();
-
             InitializeGameBoard();
- 
-            // Wire up event handlers
+
             SubmitWordButton.Click += SubmitWordButton_Click;
             EndTurnButton.Click += EndTurnButton_Click;
 
-            //start turn (player 1)
             _game.Player1.Clock.Start();
         }
 
+        /// <summary>
+        /// Submit inputted word
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SubmitWordButton_Click(object sender, RoutedEventArgs e)
         {
             string word = WordInputTextBox.Text.Trim().ToUpper();
@@ -92,10 +93,14 @@ namespace Boogle
             {
                 ShakeTextBox(WordInputTextBox);
             }
-            //end logic
             WordInputTextBox.Clear();
         }
-
+        
+        /// <summary>
+        /// End turn
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EndTurnButton_Click(object sender, RoutedEventArgs e)
         {
             WordInputTextBox.Clear();
@@ -134,7 +139,7 @@ namespace Boogle
                     sumPoints += Game.CalculatePoints(word);
                 }
                 _game.Ai.Score += sumPoints;
-                //MessageBox.Show(string.Join(" ", listOfWords) + sumPoints);
+                MessageBox.Show(string.Join(" ", listOfWords) + sumPoints);
                 Player2PointsTextBlock.Text = $"Points: {_game.Ai.Score}";    
             }
             else
@@ -143,6 +148,9 @@ namespace Boogle
             }
         }
 
+        /// <summary>
+        /// Change turn and update everything
+        /// </summary>
         private void ChangeTurn()
         {
             _game.CurrentPlayer.Clock.Stop();
@@ -156,7 +164,7 @@ namespace Boogle
             {
                 _game.CurrentPlayer = _game.Player1;
             }
-            CurrentPlayerTurnTextBlock.Text = _game.CurrentPlayer.Name;
+            CurrentPlayerTurnTextBlock.Text = $"{_game.CurrentPlayer.Name}'s turn";
             _game.CurrentPlayer.Clock.Start();
         }
         private void WordInputTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -167,120 +175,79 @@ namespace Boogle
             }
         }
 
+        /// <summary>
+        /// Shaking animation if failed input
+        /// </summary>
+        /// <param name="textBox"></param>
         private void ShakeTextBox(TextBox textBox)
         {
-            const int shakeDelta = 5; // Amount to move left and right
-            const int shakeDuration = 50; // Duration of each shake in milliseconds
-            int shakes = 5; // Number of shakes (must be an odd number)
+            const int shakeDelta = 5; 
+            const int shakeDuration = 50; 
+            int shakes = 5; 
 
             Storyboard storyboard = new Storyboard();
 
-            // Create the animation for horizontal shaking
             for (int i = 0; i < shakes; i++)
             {
                 DoubleAnimation shakeAnimation = new DoubleAnimation
                 {
-                    From = (i % 2 == 0) ? 0 : -shakeDelta, // Alternating between left and right
+                    From = (i % 2 == 0) ? 0 : -shakeDelta,
                     To = (i % 2 == 0) ? shakeDelta : 0,
                     Duration = TimeSpan.FromMilliseconds(shakeDuration / 2),
                     AutoReverse = false
                 };
-
-                // Add the animation to the Storyboard targeting the TranslateTransform
                 Storyboard.SetTarget(shakeAnimation, textBox);
                 Storyboard.SetTargetProperty(shakeAnimation, new PropertyPath("(RenderTransform).(TranslateTransform.X)"));
 
                 storyboard.Children.Add(shakeAnimation);
             }
-
-            // Apply a TranslateTransform if not already present
             if (textBox.RenderTransform == null || !(textBox.RenderTransform is TranslateTransform))
             {
                 textBox.RenderTransform = new TranslateTransform();
             }
-
-            // Start the shake animation
             storyboard.Begin();
         }
 
+        /// <summary>
+        /// Initialize game board
+        /// </summary>
         private void InitializeGameBoard()
         {
-            // Clear any previous row and column definitions in the grid
             GameGrid.RowDefinitions.Clear();
             GameGrid.ColumnDefinitions.Clear();
-
-            // Define the size of each cell in the grid
             double cellSize = 80;
 
-            // Add row and column definitions dynamically based on _boardSize
             for (int i = 0; i < _boardSize; i++)
             {
-                // Add Row and Column definitions with fixed pixel sizes
                 GameGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(cellSize) });
                 GameGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(cellSize) });
             }
-
-            // Initialize the _boardTextBlocks array to hold references to the TextBlock elements
             _boardTextBlocks = new TextBlock[_boardSize, _boardSize];
 
-            // Clear existing children from the grid
             GameGrid.Children.Clear();
 
-            // Add vertical grid lines
-            for (int col = 0; col <= _boardSize; col++)
-            {
-                Line verticalLine = new Line
-                {
-                    Stroke = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 63, 255, 255)),
-                    StrokeThickness = 1,
-                    X1 = col * cellSize,
-                    Y1 = 0,
-                    X2 = col * cellSize,
-                    Y2 = _boardSize * cellSize
-                };
-                GameGrid.Children.Add(verticalLine);
-            }
-
-            // Add horizontal grid lines
-            for (int row = 0; row <= _boardSize; row++)
-            {
-                Line horizontalLine = new Line
-                {
-                    Stroke = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 63, 255, 255)),
-                    StrokeThickness = 1,
-                    X1 = 0,
-                    Y1 = row * cellSize,
-                    X2 = _boardSize * cellSize,
-                    Y2 = row * cellSize
-                };
-                GameGrid.Children.Add(horizontalLine);
-            }
-
-            // Add TextBlock elements to the grid for each position
             for (int row = 0; row < _boardSize; row++)
             {
                 for (int col = 0; col < _boardSize; col++)
                 {
-                    // Create a new TextBlock for each cell
                     TextBlock textBlock = new TextBlock
                     {
                         Style = (Style)FindResource("GameBoardLetterStyle"),
                         Text = _game.Board[row, col].CurrentLetter.ToString()
                     };
 
-                    // Set the row and column for the TextBlock
                     Grid.SetRow(textBlock, row);
                     Grid.SetColumn(textBlock, col);
 
-                    // Add the TextBlock to the GameGrid
                     GameGrid.Children.Add(textBlock);
-
-                    // Store the reference in _boardTextBlocks for future updates
                     _boardTextBlocks[row, col] = textBlock;
                 }
             }
         }
 
+        /// <summary>
+        /// Update board letters
+        /// </summary>
         public void UpdateGameBoard()
         {
             _game.Board.RollAllDices();
@@ -293,20 +260,20 @@ namespace Boogle
             }
         }
 
+        /// <summary>
+        /// Timer implementation
+        /// </summary>
         private void StartUITimer()
         {
             _uiTimer = new DispatcherTimer();
             _uiTimer.Interval = TimeSpan.FromSeconds(1);
             _uiTimer.Tick += (sender, args) =>
             {
-                // Update the timer for each player
                 Player1TimerTextBlock.Text = $"Time: {_game.Player1.Clock.GetFormattedTime()}";
                 if (!_player2IsAI)
                 {
                     Player2TimerTextBlock.Text = $"Time: {_game.Player2.Clock.GetFormattedTime()}";
                 }
-
-                // Check if Player 1's timer has reached 0
                 if (_game.CurrentPlayer.Clock.GetTimeRemaining() == 0)
                 {
                     SimulateEndTurn();
@@ -315,13 +282,18 @@ namespace Boogle
             _uiTimer.Start();
         }
 
+        /// <summary>
+        /// Simulate end turn
+        /// </summary>
         private void SimulateEndTurn()
         {
-            // Simulate pressing the End Turn button
             EndTurnButton_Click(EndTurnButton, new RoutedEventArgs());
         }
 
-        // Methods to update points for each player
+        /// <summary>
+        /// Methods to update each player attributes
+        /// </summary>
+        /// <param name="points"></param> <summary>
         public void UpdatePlayer1Points(int points)
         {
             Player1PointsTextBlock.Text = $"Points: {points}";
@@ -332,7 +304,6 @@ namespace Boogle
             Player2PointsTextBlock.Text = $"Points: {points}";
         }
 
-        // Methods to update timers (placeholders for you to implement)
         public void UpdatePlayer1Timer(string time)
         {
             Player1TimerTextBlock.Text = $"Time: {time}";

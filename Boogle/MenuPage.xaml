@@ -89,7 +89,7 @@
                     </StackPanel>
 
                     <!-- Time per Turn -->
-                    <TextBlock Text="Time per Turn" FontSize="20" Foreground="White" Margin="0,10,0,10"/>
+                    <TextBlock Text="Time per Turn : > 10 sec" FontSize="20" Foreground="White" Margin="0,10,0,10"/>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Name="MinutesTextBox" Width="50" Style="{StaticResource InputControlStyle}" TextChanged="TextBox_TextChanged"/>
                         <TextBlock Text=" m" Style="{StaticResource LabelTextStyle}"/>
@@ -112,8 +112,6 @@
                             <TextBlock Text="French" Style="{StaticResource LabelTextStyle}"/>
                         </StackPanel>
                     </StackPanel>
-
-
 
                     <!-- Number of Turns -->
                     <TextBlock Text="Number of Turns (1-5)" FontSize="20" Foreground="White" Margin="0,0,0,10"/>

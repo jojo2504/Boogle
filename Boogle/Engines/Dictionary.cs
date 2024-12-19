@@ -72,7 +72,6 @@ namespace Boogle.Engines
             foreach (KeyValuePair<char, int> kvp in wordsByLetter){
                 chainDescribeDictionary += string.Format("There is {0} words which starts with the letter {1}\n", kvp.Value, kvp.Key);
             }
-
             chainDescribeDictionary += string.Format("There is {0} words in the current dictionary", _wordList.Count);
             return chainDescribeDictionary;
         }

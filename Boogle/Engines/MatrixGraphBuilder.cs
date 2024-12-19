@@ -15,6 +15,10 @@ namespace Boogle.Engines{
             _includeDiagonals = includeDiagonals;
         }
 
+        /// <summary>
+        /// Convert given 2D matrix into its graph
+        /// </summary>
+        /// <param name="matrix"></param>
         private void ConvertMatrixToGraph(T[,] matrix)
         {
             if (matrix == null){
@@ -29,6 +33,13 @@ namespace Boogle.Engines{
             }
         }
 
+        /// <summary>
+        /// Create neighbors of a given node in the matrix as store it in a asjacency list
+        /// Excludes itself, outside matrix's positions and diagonals (with paramaters)
+        /// </summary>
+        /// <param name="r"></param>
+        /// <param name="c"></param>
+        /// <param name="matrix2"></param>
         private void CreateNeighbor(int r, int c, T[,] matrix2) 
         {   
             Node<T> currentChar = new Node<T>(matrix2[r,c], r, c);
@@ -36,29 +47,29 @@ namespace Boogle.Engines{
             {
                 for (int col = -1; col <= 1; col++) 
                 {
-                    // itself
                     if (row == 0 && col == 0){
                         continue;
                     }
-                    // outside matrix
                     if ((0 > c + col) || (c + col >= matrix2.GetLength(1)) || 
                         (0 > r + row) || (r + row >= matrix2.GetLength(0))) {
                         continue;
                     }
-                    //includes diagonals or not
                     if (!_includeDiagonals){
                         if (Math.Abs(row) == 1 && Math.Abs(col) == 1) {
                             continue;
                         }
                     }
                     Node<T> neighborChar = new Node<T>(matrix2[r + row,c + col], r + row, c + col);
-                    // Add edge from current char to neighbor char
                     Add(currentChar, neighborChar);
                 }
             }
         }
 
-
+        /// <summary>
+        /// Add a node into the adjacency list of another node
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
         private void Add(Node<T> from, Node<T> to)
         {
             if (!_graph!.ContainsKey(from)) 
@@ -66,16 +77,27 @@ namespace Boogle.Engines{
             _graph[from].Add(to);
         }
 
+        /// <summary>
+        /// Clear the graph
+        /// </summary>
         public void Clear(){
             if (_graph == null) return;
             _graph.Clear();
         }
 
+        /// <summary>
+        /// Method to change graph with another matrix
+        /// </summary>
+        /// <param name="matrix"></param>
         public void SetMatrix(T[,] matrix){
             Clear();
             ConvertMatrixToGraph(matrix);
         }
 
+        /// <summary>
+        /// Create string to display the adjacency list
+        /// </summary>
+        /// <returns></returns>
         public override string ToString(){
             if (_graph == null) return "";
 
@@ -89,7 +111,7 @@ namespace Boogle.Engines{
                 }
                 if (kpv.Value.Count > 0)
                 {
-                    stringBuilder.Length -= 2; // Remove the last ", "
+                    stringBuilder.Length -= 2;
                 }
                 stringBuilder.AppendLine();
             }
@@ -99,6 +121,10 @@ namespace Boogle.Engines{
         public Dictionary<Node<T>, HashSet<Node<T>>> Graph => _graph;
         public bool IncludeDiagonals => _includeDiagonals;
     }
+
+    /// <summary>
+    /// Node structure for the graph
+    /// </summary>
     public readonly struct Node<T>
     {
         internal readonly T Value;
